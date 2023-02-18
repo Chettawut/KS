@@ -16,9 +16,9 @@
 
     <?php 
     include('css.php'); 
-    include_once('../config.php');
-    include_once ROOT .'/func.php';
-    include_once ROOT .'/import_css.php';
+    include_once('../../config.php');
+    include_once('../import_css.php');
+    include_once ROOT_CSS .'/func.php';
     ?>
 </head>
 
@@ -26,13 +26,13 @@
     <div class="wrapper">
 
         <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__shake" src="<?php echo PATH; ?>/AdminLTE-3.2.0/dist/img/AdminLTELogo.png"
+        <img class="animation__shake" src="<?php echo PATH; ?>/backend/img/logo_fb.png"
                 alt="AdminLTELogo" height="60" width="60">
         </div>
 
-        <?php include_once ROOT . '/menu_head.php'; ?>
+        <?php include_once ROOT_CSS . '/menu_head.php'; ?>
 
-        <?php include_once ROOT . '/menu_left.php'; ?>
+        <?php include_once ROOT_CSS . '/menu_left.php'; ?>
 
         <div class="content-wrapper">
             <div class="content-header">
@@ -102,7 +102,7 @@
 
         <?php 
     
-    include_once ROOT . '/import_js.php';
+    include_once ROOT_CSS . '/import_js.php';
     
 
     include_once('js.php'); 
