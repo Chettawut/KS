@@ -1,96 +1,25 @@
  <script type="text/javascript">
-     $(function() {
-
+    const HEADER = [
+        { title:"รหัสนายจ้าง"},
+        { title:"ชื่อนายจ้าง"},
+        { title:"นามสกุล"},
+        { title:"รหัสประชาชน"},
+        { title:"พาสปอร์ต"},
+        { title:"สถานะ"},          
+    ]
+     $(async function() {
          $("#add_cusdate").val(new Date().toISOString().substring(0, 10));
+
+         let employerList = await gettingEmployer();
+         let dataArray = employerList.map( m => setRowTable(m));
+         let configTb = { 
+            lengthMenu: [ [ -1], [ 'All']],
+            order: [[1, 'asc']], 
+            createdRow : actionRow 
+        }
+        console.log(dataArray, HEADER);
+         settingWaitActionTable("#tableEmployer", HEADER, dataArray, configTb);
      })
-
-     //  $.ajax({
-     //      type: "POST",
-     //      url: "ajax/get_customer.php",
-     //      //    data: $("#frmMain").serialize(),
-     //      success: function(result) {
-
-     //          for (count = 0; count < result.cuscode.length; count++) {
-
-     //              let status, color
-     //              if (result.trackno[count] != '') {
-     //                  status = 'เสร็จสิ้น'
-     //                  color = '<span class="badge bg-danger">' + status + '</span>'
-     //              } else if (result.bookdate[count] != '') {
-     //                  status = 'รับเล่มแล้ว'
-     //                  color = '<span class="badge bg-warning">' + status + '</span>'
-     //              } else if (result.followdate[count] != '') {
-     //                  status = 'ยื่นเอกสาร<br><br>ชุดโอนแล้ว'
-     //                  color = '<span class="badge bg-primary">' + status + '</span>'
-     //              } else {
-     //                  status = 'ปิดบัญชี<br><br>เสร็จสิ้น'
-     //                  color = '<span class="badge bg-success">' + status + '</span>'
-     //              }
-     //              // badge bg-danger
-     //              $('#tableCustomer').append(
-     //                  '<tr data-toggle="modal" data-target="#modal_edit" id="' + result
-     //                  .cuscode[
-     //                      count] + '" data-whatever="' + result.cuscode[
-     //                      count] + '"><td>' + result
-     //                  .titlename[count] + ' ' + result.cusname[count] + ' ' + result.lastname[
-     //                      count] + '</td><td  style="text-align:center">' + color + '</td><td>' +
-     //                  result.plateno[count] + '</td><td>' + convertDateTH(result.cusdate[count]) +
-     //                  '</td><td>' + result.code[count] + '</td><td>' + result.codeno[count] +
-     //                  '</td><td>' + result.branch[
-     //                      count] + '</td><td>' + result.oldfinance[
-     //                      count] + '</td></tr>');
-     //          }
-
-     //          var table = $('#tableCustomer').DataTable({
-     //              "paging": true,
-     //              "lengthChange": false,
-     //              "searching": true,
-     //              "ordering": true,
-     //              order: [
-     //                  [1, 'asc']
-     //              ],
-     //              "info": false,
-     //              "autoWidth": false,
-     //              "responsive": true,
-     //          });
-
-     //          $(".dataTables_filter input[type='search']").attr({
-     //              size: 40,
-     //              maxlength: 40
-     //          });
-
-
-     //      }
-
-     //  });
-
-
-     $('#add_closeprice').on('change', function() {
-         Caldiff()
-     });
-
-     $('#add_closevender').on('change', function() {
-
-         Caldiff()
-     });
-
-     $('#closeprice').on('change', function() {
-         Caldiff()
-     });
-
-     $('#closevender').on('change', function() {
-
-         Caldiff()
-     });
-
-
-     function Caldiff() {
-         let data = $('#add_closeprice').val() - $('#add_closevender').val()
-         $('#add_diff').val(parseFloat(Math.abs(Number(data) || 0).toFixed(2)).toString())
-         let data2 = $('#closeprice').val() - $('#closevender').val()
-         $('#diff').val(parseFloat(Math.abs(Number(data2) || 0).toFixed(2)).toString())
-     }
-
 
      $('#modal_edit').on('show.bs.modal', function(event) {
          var button = $(event.relatedTarget);
@@ -162,8 +91,8 @@
                      alert('รหัสซ้ำ');
                  }
              },
-             error: function(error){
-                console.log(error);
+             error: function(error) {
+                 console.log(error);
              }
          });
 
@@ -221,4 +150,35 @@
 
          $("[rm]").remove();
      }
+
+     async function gettingEmployer(){
+        let res = await $.get("ajax/get_employer.php");
+
+        return res;
+     }
+
+     function settingWaitActionTable($this, col, data, option){
+        return $($this).DataTable(Object.assign({
+            columns : col, 
+            data:data,
+            dom: '<"top"f><"tbox customscroll"t><"bottom"i><"clear">',
+            destroy:true,
+            //initComplete:tableLoad
+        },option));
+    }
+    
+    function setRowTable(m){
+        return [
+            m.empcode, 
+            m.empname,
+            m.lastname,
+            m.idcode,
+            m.passport,
+            `<span class="label badge ${m.status == 'Y' ? 'bg-success' : 'bg-danger'} label-white middle">${m.status == 'Y' ? 'ใช้งาน' : 'ไม่ใช้งาน'}</span>`,
+        ];
+    }      
+
+    function actionRow( row, data, dataIndex ) { 
+        $( row ).attr('id-ref', data[dataIndex]?.empcode ); 
+    }
  </script>

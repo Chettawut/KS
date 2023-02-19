@@ -13,7 +13,7 @@ include_once('../conn.php');
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>เคสลูกค้า (Customer)</title>
+    <title>เคสลูกค้า (Employer)</title>
 
     <?php
     include_once('css.php');
@@ -71,26 +71,9 @@ include_once('../conn.php');
                     <br>
                     <div class="row">
                         <div class="col-lg-12 col-12">
-                            <table name="tableCustomer" id="tableCustomer" class="table table-bordered table-striped">
-                                <thead style="background-color:#D6EAF8;">
-                                    <tr> 
-                                        <th>ชื่อลูกค้า</th>
-                                        <th>สถานะ</th>
-                                        <th>ทะเบียนรถ</th>
-                                        <th>วันที่</th>
-                                        <th>Code Ref</th>
-                                        <th>เลข Chaiyo</th>
-                                        <th>ชื่อสาขา</th>
-                                        <th>ไฟแนนต์เดิม</th>  
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                </tbody>
-                            </table>
+                            <table name="tableEmployer" id="tableEmployer" class="table table-bordered table-striped"></table>
                         </div>
-                    </div>
-
+                    </div> 
                 </div>
             </section>
         </div>
