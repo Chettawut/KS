@@ -19,9 +19,11 @@ if ($stmt = $conn->prepare('SELECT firstname,lastname,code,password,type,status 
 
 }
 
+
 if ($stmt->num_rows > 0) {
 	$stmt->bind_result($firstname,$lastname,$code,$password,$type,$status);
 	$stmt->fetch();
+ 
 	// Account exists, now we verify the password.
 	// Note: remember to use password_hash in your registration file to store the hashed passwords.
 	if (password_verify($_POST['password'], $password)) {
