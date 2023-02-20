@@ -46,7 +46,7 @@
         color: #5b6574;
         font-size: 26px;
         padding: 15px 0 10px 0;
-        border-bottom: 1px solid #bf7fff;
+        border-bottom: 1px solid #83AF9B;
     }
 
     .login form {
@@ -62,7 +62,7 @@
         align-items: center;
         width: 50px;
         height: 50px;
-        background-color: #bf7fff;
+        background-color: #83AF9B;
         color: #ffffff;
     }
 
@@ -79,7 +79,7 @@
         width: 100%;
         padding: 15px;
         margin-top: 20px;
-        background-color: #bf7fff;
+        background-color:  #83AF9B ;
         border: 0;
         cursor: pointer;
         font-weight: bold;
@@ -88,7 +88,7 @@
     }
 
     .login form input[type="submit"]:hover {
-        background-color: #bf7fff;
+        background-color: #2F9599 ;
         transition: background-color 0.2s;
     }
 
@@ -122,6 +122,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto">
+                
                 <!-- <div class="post-preview">
                     <a href="<?php echo PATH; ?>/register">
                         <h2 class="post-title">
@@ -192,9 +193,10 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-css">
                 <div class="login">
-
+                    
                     <h1> <img src="img/logo.png" width="90px;"></h1>
                     <form action="login_result.php" method="post">
+                        
                         <label for="username">
                             <i class="fas fa-user"></i>
                         </label>
@@ -210,7 +212,6 @@
         </div>
     </div>
 
-    <hr>
 
     <?php include_once('footer.php'); ?>
 
