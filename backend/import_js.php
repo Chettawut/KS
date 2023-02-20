@@ -53,4 +53,13 @@ $.widget.bridge('uibutton', $.ui.button)
 <script src="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <!-- <script src="AdminLTE-3.2.0/dist/js/demo.js"></script> -->
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/dist/js/pages/dashboard.js"></script>
+<!-- <script src="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/dist/js/pages/dashboard.js"></script> -->
+<script>
+    $( document ).ready(function(){
+        setTimeout( ()=> { 
+            $(".preloader .animation__shake").hide();
+            $(".preloader").height("0px");
+            
+        }, 800);
+    }); 
+</script>

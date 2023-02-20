@@ -99,7 +99,7 @@
                         <div class="col-lg-6 col-6">
                             <div class="small-box bg-danger">
                                 <div class="inner">
-                                    <h3 id="spancountcus">&nbsp;</h3>
+                                    <h3 id="spancountcus"></h3>
 
                                     <p>เคชลูกค้าทั้งหมด</p>
                                 </div>

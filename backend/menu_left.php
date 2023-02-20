@@ -38,6 +38,24 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="<?php echo PATH; ?>/backend/employer" class="nav-link">
+                        <i class="nav-icon fas fa-user-tie"></i>
+                        <p>นายจ้าง</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?php echo PATH; ?>/backend/worker" class="nav-link">
+                        <i class="nav-icon fas fa-user-friends"></i>  
+                        <p>ลูกจ้าง</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?php echo PATH; ?>/backend/employment" class="nav-link">
+                        <i class="nav-icon fas fa-users-cog"></i>
+                        <p>จัดการ การจ้าง</p>
+                    </a>
+                </li>
             </ul>
         </nav>
 
