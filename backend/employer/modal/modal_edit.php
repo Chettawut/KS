@@ -3,116 +3,93 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content w3-flat-turquoise">
             <div class="modal-header bg-gradient-secondary">
-                <h5 class="modal-title">แก้ไขลูกค้า</h5>
+                <h5 class="modal-title">แก้ไขนายจ้าง</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form name="frmEditCustomer" id="frmEditCustomer" method="POST" style="padding:10px;"
-                action="javascript:void(0);">
-                <div class="modal-body">
+            <div class="modal-body">
+                <form name="frmEditCustomer" id="frmEditCustomer" method="POST" style="padding:10px;"
+                    action="javascript:void(0);" enctype="multipart/form-data">
                     <div class="form-row">
-                        <div class="col-md-4">
-                            <label class="col-form-label">วันที่ </label>
-                            <input type="date" class="form-control" name="cusdate" id="cusdate" required>
+                        <div class="col-md-6 col-sm-12 d-flex gap-2" style="gap: 8px;">
+                            <div class="col-msd-3 p-0">
+                                <label class="col-form-label">คำนำหน้า :</label>
+                                <select class="custom-select" name="titlename" id="titlename" required>
+                                    <option value=""></option>
+                                    <option value="นาย">นาย</option>
+                                    <option value="น.ส.">น.ส.</option>
+                                    <option value="นาง">นาง</option>
+                                    <option value="ว่าที่ร้อยตรี">ว่าที่ร้อยตรี</option>
+                                    <option value="ดร.">ดร.</option>
+                                </select>
+                            </div>
+                            <div class="col-md-9 p-0">
+                                <label class="col-form-label">ชื่อ :</label>
+                                <input type="text" class="form-control" name="empname" id="empname" value="" required>
+                            </div>
                         </div>
-                        <div class="col-md-4">
-                            <label class="col-form-label">Code Ref </label>
-                            <input type="text" class="form-control" name="code" id="code" required>
-                        </div>
-                        <div class="col-md-4">
-                            <label class="col-form-label">เลข Chaiyo </label>
-                            <input type="text" class="form-control" name="codeno" id="codeno" value="">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-md-3">
-                            <label class="col-form-label">คำนำหน้า :</label>
-                            <select class="custom-select" name="titlename" id="titlename" required>
-                                <option value=""></option>
-                                <option value="นาย">นาย</option>
-                                <option value="น.ส.">น.ส.</option>
-                                <option value="นาง">นาง</option>
-                                <option value="ว่าที่ร้อยตรี">ว่าที่ร้อยตรี</option>
-                                <option value="ดร.">ดร.</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <label class="col-form-label">ชื่อ :</label>
-                            <input type="text" class="form-control" name="cusname" id="cusname" value="" required>
-                        </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6 col-sm-12">
                             <label class="col-form-label">นามสกุล :</label>
                             <input type="text" class="form-control" name="lastname" id="lastname" value="" required>
                         </div>
                     </div>
-                    <hr>
-                    <div class="form-row">
-                        <div class="col-md-4">
-                            <label class="col-form-label">ทะเบียนรถ </label>
-                            <input type="text" class="form-control" name="plateno" id="plateno" value="">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="recipient-name" class="col-form-label">ประเภทสินเชื่อ</label>
-                            <select class="custom-select" name="credittype" id="credittype" required>
-                                <option value=""></option>
-                                <option value="จำนำ">จำนำ</option>
-                                <option value="เช่าซื้อ">เช่าซื้อ</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="recipient-name" class="col-form-label">ไฟแนนซ์เดิม</label>
-                            <input type="text" class="form-control" name="oldfinance" id="oldfinance">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-md-4">
-                            <label class="col-form-label">ยอดปิดบัญชี </label>
-                            <input type="number" class="form-control" name="closeprice" id="closeprice" step="0.01" >
-                        </div>
-                        <div class="col-md-4">
-                            <label class="col-form-label">ยอดปิดจาก Vender </label>
-                            <input type="number" class="form-control" name="closevender" id="closevender" step="0.01" >
-                        </div>
-                        <div class="col-md-4">
-                            <label class="col-form-label">ส่วนต่าง </label>
-                            <input type="number" class="form-control" name="diff" id="diff" disabled>
-                        </div>
-                    </div>
 
                     <div class="form-row">
-
-                        <div class="col-md-4">
-                            <label for="recipient-name" class="col-form-label">ชื่อสาขา</label>
-                            <input type="text" class="form-control" name="branch" id="branch">
-                        </div> 
+                        <div class="col-md-6 col-sm-12">
+                            <label class="col-form-label">รหัสบัตรประชาชน :</label>
+                            <input type="text" class="form-control" name="idcode" id="idcode" value="" required>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            <label class="col-form-label">พาสปอร์ต :</label>
+                            <input type="text" class="form-control" name="passport" id="passport" value="" required>
+                        </div>
                     </div>
-                    <hr>
                     <div class="form-row">
-                        <div class="col-md-4">
-                            <label for="recipient-name" class="col-form-label">วันที่ยื่นตามเอกสารตัวจริง</label>
-                            <input type="date" class="form-control" name="followdate" id="followdate">
+                        <div class="col-md-6 col-sm-12">
+                            <label class="col-form-label">วันที่ </label>
+                            <input type="date" class="form-control" name="empbirth" id="empbirth" required>
                         </div>
-                        <div class="col-md-4">
-                            <label for="recipient-name" class="col-form-label">วันที่รับเล่ม</label>
-                            <input type="date" class="form-control" name="bookdate" id="bookdate">
+                        <div class="col-md-6 col-sm-12">
+                            <label class="col-form-label">แนบไฟล์ :</label>
+                            <div class="file-list d-flex flex-column" style="gap:0.6rem;">
+                                <template>
+                                    <div class="input-group" temp>
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" name="atthFile"
+                                                onchange="fileChange(this)">
+                                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                        </div>
+                                        <div class="input-group-append d-none">
+                                            <button type="button" class="btn btn-sm rounded" onclick="removeFile(this)">
+                                                <i class="far fa-times-circle text-danger"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </template>
+                                <!-- <div class="input-group">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" name="atthFile"
+                                            onchange="fileChange(this)">
+                                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                    </div>
+                                    <div class="input-group-append d-none">
+                                        <button type="button" class="btn btn-sm rounded" onclick="removeFile(this)">
+                                            <i class="far fa-times-circle text-danger"></i>
+                                        </button>
+                                    </div>
+                                </div> -->
+                            </div>
                         </div>
-                        <div class="col-md-4">
-                            <label for="recipient-name" class="col-form-label">เลขที่ Tracking</label>
-                            <input type="text" class="form-control" name="trackno" id="trackno">
-                        </div>
-                        
-
                     </div>
-                    <input type="hidden" id="cuscode" name="cuscode">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="col text-center">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                    <button type="submit" form="frmEditCustomer" class="btn btn-primary">แก้ไข</button>
                 </div>
-                <div class="modal-footer">
-                    <div class="col text-center">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
-                        <button type="submit" form="frmEditCustomer" class="btn btn-primary">แก้ไข</button>
-                    </div>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>

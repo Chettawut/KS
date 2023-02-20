@@ -2,31 +2,142 @@
 	header('Content-Type: application/json');
 	include('../../conn.php');
     
-    date_default_timezone_set("Asia/Bangkok");
-    
-    $strSQL = "UPDATE customer SET ";
-    $strSQL .= "cusname='".$_POST["cusname"]."',lastname='".$_POST["lastname"]."' ";
-    $strSQL .= ",titlename='".$_POST["titlename"]."',cusdate='".$_POST["cusdate"]."',code='".$_POST["code"]."' ";
-    $strSQL .= ",codeno='".$_POST["codeno"]."',plateno='".$_POST["plateno"]."',credittype='".$_POST["credittype"]."' ";
-    $strSQL .= ",oldfinance='".$_POST["oldfinance"]."',closeprice='".$_POST["closeprice"]."',closevender='".$_POST["closevender"]."' ";
-    $strSQL .= ",diff='".$_POST["diff"]."',branch='".$_POST["branch"]."',province='".$_POST["province"]."' ";
-    $strSQL .= ",followdate='".$_POST["followdate"]."',bookdate='".$_POST["bookdate"]."',trackno='".$_POST["trackno"]."' ";
-    $strSQL .= ",s_date = '".date("Y-m-d")."',s_time='".date("H:i:s")."' ";
-    $strSQL .= "WHERE cuscode= '".$_POST["cuscode"]."' ";
-    
-	$query = mysqli_query($conn,$strSQL);
+    date_default_timezone_set("Asia/Bangkok");   
 
+    $path = dirname(__FILE__, 3);
+    $pathUpload = "//uploads//";
+  
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
+        $idcode = $_POST["idcode"];
+        $passport = $_POST["passport"];
+        $empname = $_POST["empname"];
+        $lastname = $_POST["lastname"];  
+        $titlename = $_POST["titlename"];  
+        $empbirth = $_POST["empbirth"];  
+        $empcode = $_POST["empcode"];  
+ 
+        $sql = "select * from employer where idcode = '$idcode' and empcode != '$empcode' ";
+        $query = mysqli_query($conn, $sql);
+        $res = $query->fetch_assoc(); 
+        if(!empty($res["idcode"])){
+            mysqli_close($conn);
     
-    // echo $strSQL;
+            http_response_code(400);
+            echo "รหัสบัตรประชาชนซ้ำ";
+            die(); 
+        } 
+ 
+        $sql = "select * from employer where passport = '$passport' and empcode != '$empcode' ";
+        $query = mysqli_query($conn, $sql);
+        $res = $query->fetch_assoc(); 
+        if(!empty($res["passport"])){
+            mysqli_close($conn);
+    
+            http_response_code(400);
+            echo "พาสปอร์ตเซ้ำ";
+            die(); 
+        } 
+ 
+        $sql = "select * from employer where empcode = '$empcode' ";
+        $query = mysqli_query($conn, $sql);
+        $emplr = $query->fetch_assoc(); 
+        $old_idcode = $emplr["idcode"];
+        $old_passport = $emplr["passport"];
 
 
-        if($query) {
-            echo json_encode(array('status' => '1','message'=> 'เคสลูกค้า '.$_POST["cusname"].' '.$_POST["lastname"].' สำเร็จ'));
+
+        $_form = $_POST;   
+        //var_dump("update attachment  set url = replace(url, '$old_idcode', '$idcode') where percode = '$empcode'"); exit;
+        $pathDocument = $idcode . "//";
+        $filepath = $path . $pathUpload . $pathDocument;
+        if( $idcode != $old_idcode){  
+            rename($path . $pathUpload . $old_idcode. "//", $path . $pathUpload . $idcode. "//");
+            $result = $conn->query("update attachment  set url = replace(url, '$old_idcode', '$idcode') where percode = '$empcode'");  
         }
-        else
-        {
-            echo json_encode(array('status' => '0','message'=> 'Error insert data!'));
+        if (!file_exists($path . $pathUpload)) {
+            mkdir($path . $pathUpload, 0777);
         }
+        if (!file_exists($filepath)) {
+            mkdir($filepath, 0777);
+        }
+        
+         
+        $fileDeleted = json_decode($_POST["fileDelete"], true); 
+        if(!empty($fileDeleted)){ 
+            foreach($fileDeleted as $i => $v){
+                $f_code = $v["code"];
+                $f_percode = $v["percode"];
+                $f_no = $v["no"];
+                $f_fn = $v["fn"];                
+                if(file_exists($filepath .  $f_fn)){
+                    unlink($filepath . $f_fn);
+                } 
+                $result = $conn->query("DELETE FROM attachment WHERE code = '$f_code' and percode = '$f_percode' and attno = '$f_no' "); 
+            } 
+        } 
+
+        $document = array();
+        if(!empty($_FILES["file"])){ 
+            $file = $_FILES["file"]; 
+            $sql = "select max(attno) m from attachment where percode = '$empcode' ";
+            $query = mysqli_query($conn, $sql);
+            $res = $query->fetch_assoc(); 
+            $max_attno = $res ? (int)($res["m"]) + 1 : 1;
+            for ($i = 0; $i < count($file["name"]); $i++) {
+                $file_temp = $file["tmp_name"][$i];
+                $f = $file["name"][$i];
+                $ext = pathinfo($f, PATHINFO_EXTENSION);
+                $file_name = sprintf("$empcode-%02s.$ext", $i+$max_attno);
+                if (file_exists($filepath . $file_name)) continue;
+        
+                if (move_uploaded_file($file_temp, $filepath . $file_name)) {
+                    if (file_exists($filepath . $file_name) != 1) continue;
+        
+                    array_push($document, array("url" => $pathUpload . $pathDocument . $file_name, "attname" => $file_name, "attno" => $i+$max_attno ));
+                }
+            }            
+        }     
     
-        mysqli_close($conn);
+        $conn->begin_transaction();
+        try {
+            $sql = "
+            UPDATE employer SET  
+                empname = '$empname',
+                lastname = '$lastname',
+                titlename = '$titlename',
+                idcode = '$idcode',
+                empbirth = '$empbirth', 
+                passport = '$passport' 
+            where
+                empcode = '$empcode'";            
+            $conn->query($sql); 
+
+            foreach ($document as $i => $v) {
+                $percode = $empcode;
+                $url = $v["url"];
+                $attname = $v["attname"];
+                $attno = $v["attno"];
+                $sql = "INSERT INTO attachment(percode,attno,attname,url) VALUES ('$percode', $attno, '$attname', '$url')";
+                $result = $conn->query($sql);
+                //echo $sql;
+                //if($result) throw new Exception("Statement query error.");
+            }
+            $conn->commit();
+            mysqli_close($conn);
+    
+            header('Status: 200');
+            echo json_encode(array('status' => '1', 'message' => "แก้ไข $empname $lastname สำเร็จ"));
+        } catch (mysqli_sql_exception $exception) {
+            $conn->rollback();
+            mysqli_close($conn);
+    
+            header('Status: 400');
+            echo json_encode(array('status' => '0', 'message' => 'Error insert data!'));
+            //throw $exception;
+        }
+    } else {
+        echo "Incorrect Parameter";
+    }
+    exit; 
 ?>

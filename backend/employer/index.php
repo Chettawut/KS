@@ -71,7 +71,7 @@ include_once('../conn.php');
                     <br>
                     <div class="row">
                         <div class="col-lg-12 col-12">
-                            <table name="tableEmployer" id="tableEmployer" class="table table-bordered table-striped"></table>
+                            <table name="tableEmployer" id="tableEmployer" class="table table-bordered table-striped w-100"></table>
                         </div>
                     </div> 
                 </div>

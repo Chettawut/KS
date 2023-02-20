@@ -1,8 +1,8 @@
 <?php
 	header('Content-Type: application/json');
 	include('../../conn.php');
-	
-	$sql = "SELECT * FROM employer;"; 
+	$percode = $_GET["empcode"];
+	$sql = "SELECT * from attachment a where percode = '$percode';"; 
 	$query = mysqli_query($conn,$sql);
 	// Fetch all
 	$res = $query->fetch_all(MYSQLI_ASSOC); //MYSQLI_ASSOC
