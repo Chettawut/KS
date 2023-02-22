@@ -250,7 +250,7 @@
             fileGroup.find("small.d-none").remove();
             fileGroup.find("label.col-form-label").text(`ชื่อไฟล์ (${(parseInt(i)+1)}) :`);
             fileGroup.find("input[name=attname]").val(attach[i].attname).attr("code", attach[i].code);
-            formRow.attr("attacedasd", "asdasd");
+            _t.attr("attaced", "");
             form.append(_t);
          };
          let _input = template.find(".form-row");
