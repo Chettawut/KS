@@ -1,9 +1,9 @@
  <script type="text/javascript">
      const HEADER = [{
-             title: "รหัสนายจ้าง"
+             title: "รหัสลูกจ้าง"
          },
          {
-             title: "ชื่อนายจ้าง"
+             title: "ชื่อลูกจ้าง"
          },
          {
              title: "นามสกุล"
@@ -21,15 +21,16 @@
              title: "ตัวเลือก"
          },
      ];
-     let _employerList = undefined;
+     let _employer_option = undefined;
+     let _workerList = undefined;
      let _filesDelete = [];
      let _fileRename = [];
      let _fileFormData = [];
      $(async function() {
          $("#add_cusdate").val(new Date().toISOString().substring(0, 10));
-         _employerList = await gettingEmployer();
-
-         let dataArray = _employerList.map(m => setRowTable(m));
+         _workerList = await gettingWorker();
+         _employer_option = await gettingoptionEmployer();
+         let dataArray = _workerList.map(m => setRowTable(m));
          let ignoreSorting = HEADER.map((m, i) => (["ตัวเลือก", "สถานะ"].includes(m.title) ? i : -1)).filter(f => f != -1);
          let configTb = {
              lengthMenu: [
@@ -45,7 +46,7 @@
              }],
              createdRow: actionRow
          }
-         tables("#tableEmployer", HEADER, dataArray, configTb);
+         tables("#tableWorker", HEADER, dataArray, configTb);
      });
 
      $("#btnRefresh").click(function() {
@@ -53,7 +54,7 @@
      });
 
      //เพิ่มนายจ้าง
-     $("#frmAddEmployer").submit(async function(e) {
+     $("#frmAddWorker").submit(async function(e) {
          e.preventDefault();
          $(':disabled').each(function(event) {
              $(this).removeAttr('disabled');
@@ -90,7 +91,7 @@
          }
          $.ajax({
              type: "POST",
-             url: "ajax/add_employer.php",
+             url: "ajax/add_worker.php",
              processData: false,
              contentType: false,
              data: formData,
@@ -111,18 +112,18 @@
          });
      });
 
-     //แก้ไขนายจ้าง
-     $("#frmEditCustomer").submit(async function(e) {
+     //แก้ไขลูกจ้าง
+     $("#frmEditWorker").submit(async function(e) {
          e.preventDefault();
          $(':disabled').each(function(e) {
              $(this).removeAttr('disabled');
-         }); 
+         });
          let attached = $(this).find("[attached]");
          let form = $(this).serializeArray();
          let files = $(this).find("[attached] [name=atthFile]");
          let file_rename = $(this).find("[ic] [name=attname][code]");
          let formData = new FormData();
-         let empcode = $("#modal_edit").attr("data-empcode");
+         let wkcode = $("#modal_edit").attr("data-wkcode");
 
          //  if(files.length < 1 && attached.length < 1) {
          //     alert("กรุณา แนบไฟล์");
@@ -165,10 +166,10 @@
              formData.append("file[]", f.files[0])
          }
          formData.append("fileDelete", JSON.stringify(_filesDelete));
-         formData.append("empcode", empcode);
+         formData.append("wkcode", wkcode);
          $.ajax({
              type: "POST",
-             url: "ajax/edit_employer.php",
+             url: "ajax/edit_worker.php",
              processData: false,
              contentType: false,
              data: formData,
@@ -187,7 +188,7 @@
              }
          });
 
-     });
+     }); 
 
      $(document).on("click", "tr[id-ref]", function() {
          if (!$(this).attr("selected")) {
@@ -209,8 +210,8 @@
          let modal = $("#modal_edit");
          let parent = $(this).closest("tr");
 
-         let empcode = parent.attr("id-ref");
-         modal.attr("data-empcode", empcode);
+         let wkcode = parent.attr("id-ref");
+         modal.attr("data-wkcode", wkcode);
 
          $("#modal_edit").modal({
              backdrop: false
@@ -218,15 +219,29 @@
          $("#modal_edit").modal("show");
      });
 
-     $(document).on("show.bs.modal", "#modal_edit", async function(e) {
+     $(document).on("show.bs.modal", "#modal_add", function() {
+        const m = $(this);
+        m.find("select[name=empcode]").select2({
+            destroy:true,
+            data: _employer_option,
+        }).val(null).trigger('change');
 
+     });
+
+     $(document).on("show.bs.modal", "#modal_edit", async function(e) {
          let modal = $(this);
-         let empcode = modal.attr("data-empcode");
-         let employer = (_employerList.filter(f => f.empcode == empcode))[0];
-         let attach = await gettingFile(empcode);
-         Object.keys(employer).forEach((f, k) => {
-             modal.find(`.modal-body [name=${f}]`).val(employer[f]);
+         let wkcode = modal.attr("data-wkcode");
+         let worker = (_workerList.filter(f => f.wkcode == wkcode))[0];
+         let attach = await gettingFile(wkcode);
+         Object.keys(worker).forEach((f, k) => {
+             modal.find(`.modal-body [name=${f}]`).val(worker[f]);
          });
+ 
+         modal.find("select[name=empcode]").select2({
+            destroy:true,
+            data: _employer_option,
+        }).val(null).trigger('change');         
+
          const fileList = modal.find(".modal-body .file-list");
 
          const form = modal.find("form[enctype='multipart/form-data']");
@@ -250,7 +265,9 @@
              inputGroup.find(".btn-dl")
                  .removeClass("d-none")
                  .removeAttr("onclick")
-                 .attr(Object.assign(attach[i], { ondel: "" }))
+                 .attr(Object.assign(attach[i], {
+                     ondel: ""
+                 }))
 
              fileGroup.find("small.d-none").remove();
              fileGroup.find("label.col-form-label").text(`ชื่อไฟล์ (${(parseInt(i)+1)}) :`);
@@ -336,20 +353,6 @@
          $("[rm]").remove();
      }
 
-     async function gettingEmployer() {
-         let res = await $.get("ajax/get_employer.php");
-
-         return res;
-     }
-
-     async function gettingFile(empcode) {
-         let res = await $.get("ajax/get_attachfile.php", {
-             empcode: empcode
-         });
-
-         return res;
-     }
-
      function tables($this, col, data, option) {
          return $($this).DataTable(Object.assign({
              columns: col,
@@ -362,21 +365,41 @@
 
      function setRowTable(m) {
          return [
-             m.empcode,
-             m.empname,
+             m.wkcode,
+             m.wkname,
              m.lastname,
              m.idcode,
              m.passport,
              `<span class="label badge ${m.status == 'Y' ? 'bg-success' : 'bg-danger'} label-white middle">${m.status == 'Y' ? 'ใช้งาน' : 'ไม่ใช้งาน'}</span>`,
              `<div>
-                <button class="btn btn-sm rounded btn-primary btn-edit" data-empcode="${m.empcode}">
-                    <i class="fas fa-pencil-alt"></i>
-                </button>
-            </div>`,
+                     <button class="btn btn-sm rounded btn-primary btn-edit" data-whatever="${m.wkcode}" data-wkcode="${m.wkcode}">
+                         <i class="fas fa-pencil-alt"></i>
+                     </button>
+                 </div>`,
          ];
      }
 
      function actionRow(row, data, dataIndex) {
          $(row).attr('id-ref', data[0]);
+     }
+
+     async function gettingWorker() {
+         let res = await $.get("ajax/get_worker.php");
+
+         return res;
+     }
+
+     async function gettingFile(wkcode) {
+         let res = await $.get("ajax/get_attachfile.php", {
+             wkcode: wkcode
+         });
+
+         return res;
+     }
+
+     async function gettingoptionEmployer(wkcode) {
+         let res = await $.get("ajax/get_optionemployer.php");
+
+         return res;
      }
  </script>

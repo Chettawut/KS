@@ -10,7 +10,7 @@
     if ($_SERVER["REQUEST_METHOD"] == "POST" ) { 
         extract($_POST, EXTR_OVERWRITE, "_");  
 
-        $sql = "select * from employer where idcode = '$idcode' and empcode != '$empcode' ";
+        $sql = "select * from worker where idcode = '$idcode' and wkcode != '$wkcode' ";
         $query = mysqli_query($conn, $sql);
         $res = $query->fetch_assoc(); 
         if(!empty($res["idcode"])){
@@ -21,7 +21,7 @@
             die(); 
         } 
  
-        $sql = "select * from employer where passport = '$passport' and empcode != '$empcode' ";
+        $sql = "select * from worker where passport = '$passport' and wkcode != '$wkcode' ";
         $query = mysqli_query($conn, $sql);
         $res = $query->fetch_assoc(); 
         if(!empty($res["passport"])){
@@ -32,15 +32,13 @@
             die(); 
         } 
  
-        $sql = "select * from employer where empcode = '$empcode' ";
+        $sql = "select * from worker where wkcode = '$wkcode' ";
         $query = mysqli_query($conn, $sql);
-        $emplr = $query->fetch_assoc(); 
-        $old_idcode = $emplr["idcode"];
-        $old_passport = $emplr["passport"]; 
+        $worker = $query->fetch_assoc();  
 
         $_form = $_POST;   
-        //var_dump("update attachment  set url = replace(url, '$old_idcode', '$idcode') where percode = '$empcode'"); exit;
-        $pathDocument = $empcode . "//";
+        //var_dump("update attachment  set url = replace(url, '$old_idcode', '$idcode') where percode = '$wkcode'"); exit;
+        $pathDocument = $wkcode . "//";
         $filepath = $path . $pathUpload . $pathDocument;
 
         if (!file_exists($path . $pathUpload)) {
@@ -86,7 +84,7 @@
                 $file = $_FILES["file"];
                 $filed_data = json_decode($fileData, true); 
                 
-                $sql = "select max(attno) m from attachment where percode = '$empcode' ";
+                $sql = "select max(attno) m from attachment where percode = '$wkcode' ";
                 $query = mysqli_query($conn, $sql);
                 $res = $query->fetch_assoc(); 
                 $max_attno = $res ? (int)($res["m"]) + 1 : 1;
@@ -95,7 +93,7 @@
                     $file_temp = $file["tmp_name"][$i];
                     $f = $file["name"][$i];
                     $ext = pathinfo($f, PATHINFO_EXTENSION);
-                    $file_name = sprintf("$empcode-%02s.$ext", $i+$max_attno); 
+                    $file_name = sprintf("$wkcode-%02s.$ext", $i+$max_attno); 
                     
                     //if (file_exists($filepath . $file_name)) continue;
             
@@ -112,28 +110,26 @@
             //var_dump($document);
             ///throw new Exception("error test");
            // exit;
-            $sql  = "UPDATE employer SET empname=?,lastname=?,titlename=?,idcode=?,empbirth=?,passport=? where empcode = ?";            
+            $sql  = "UPDATE worker SET wkname=?,lastname=?,titlename=?,idcode=?,wkbirth=?,passport=? where wkcode = ?";            
             $stmt = $conn->prepare($sql); // prepare
-            $data = [$empname,$lastname,$titlename,$idcode,$empbirth,$passport,$empcode];
+            $data = [$wkname,$lastname,$titlename,$idcode,$wkbirth,$passport,$wkcode];
             $stmt->bind_param(str_repeat('s', count($data)), ...$data); // bind array at once
             if(!$stmt->execute()) throw new Exception("Update data error."); 
 
             foreach ($document as $i => $v) {
-                $percode = $empcode;
+                $percode = $wkcode;
                 extract($v);
                 $sql = "INSERT INTO attachment(percode,attno,attname,url) VALUES (?,?,?,?)";
                 $stmt = $conn->prepare($sql); // prepare
-                $data = [$empcode, $v["attno"], $v["attname"], $v["url"]];
+                $data = [$wkcode, $v["attno"], $v["attname"], $v["url"]];
                 $stmt->bind_param('siss', ...$data); // bind array at once
-                if(!$stmt->execute()) throw new Exception("Update data error.");  
-                //echo $sql;
-                //if($result) throw new Exception("Statement query error.");
+                if(!$stmt->execute()) throw new Exception("Update data error.");   
             }
             $conn->commit();
             mysqli_close($conn);
     
             header('Status: 200');
-            echo json_encode(array('status' => '1', 'message' => "แก้ไข $empname $lastname สำเร็จ"));
+            echo json_encode(array('status' => '1', 'message' => "แก้ไข $wkname $lastname สำเร็จ"));
         } catch (mysqli_sql_exception $exception) {
             $conn->rollback();
             mysqli_close($conn);
