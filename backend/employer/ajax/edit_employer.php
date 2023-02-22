@@ -6,8 +6,7 @@
 
     $path = dirname(__FILE__, 3);
     $pathUpload = "//uploads//";
-  
-
+   
     if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
         $idcode = $_POST["idcode"];
         $passport = $_POST["passport"];
@@ -68,18 +67,32 @@
             foreach($fileDeleted as $i => $v){
                 $f_code = $v["code"];
                 $f_percode = $v["percode"];
-                $f_no = $v["no"];
-                $f_fn = $v["fn"];                
-                if(file_exists($filepath .  $f_fn)){
-                    unlink($filepath . $f_fn);
+                $f_no = $v["attno"];
+                $f_fn = $v["url"];                
+                if(file_exists( $path .  $f_fn)){
+                    unlink( $path . $f_fn);
                 } 
                 $result = $conn->query("DELETE FROM attachment WHERE code = '$f_code' and percode = '$f_percode' and attno = '$f_no' "); 
+            } 
+        } 
+         
+        $fileRename = json_decode($_POST["fileRename"], true); 
+        if(!empty($fileRename)){ 
+            foreach($fileRename as $i => $v){
+                $rename_code = $v["code"];
+                $rename_attname = $v["attname"];
+                $sql = "UPDATE attachment SET attname = ? WHERE code = ?"; // sql 
+                $stmt = $conn->prepare($sql); // prepare
+                $stmt->bind_param('ss', $rename_code, $rename_attname); // bind array at once
+                $stmt->execute(); 
             } 
         } 
 
         $document = array();
         if(!empty($_FILES["file"])){ 
-            $file = $_FILES["file"]; 
+            $file = $_FILES["file"];
+            $fileData = json_decode($_POST["fileData"], true); 
+            var_dump($fileData); exit;
             $sql = "select max(attno) m from attachment where percode = '$empcode' ";
             $query = mysqli_query($conn, $sql);
             $res = $query->fetch_assoc(); 
@@ -93,8 +106,8 @@
         
                 if (move_uploaded_file($file_temp, $filepath . $file_name)) {
                     if (file_exists($filepath . $file_name) != 1) continue;
-        
-                    array_push($document, array("url" => $pathUpload . $pathDocument . $file_name, "attname" => $file_name, "attno" => $i+$max_attno ));
+                    $att_name = $fileData[$i]["attname"];
+                    array_push($document, array("url" => $pathUpload . $pathDocument . $file_name, "attname" => $att_name, "attno" => $i+$max_attno ));
                 }
             }            
         }     

@@ -32,7 +32,7 @@ include_once('../conn.php');
 
         <?php include_once ROOT_CSS . '/menu_head.php'; ?>
 
-        <?php include_once ROOT_CSS . '/menu_left.php'; ?> 
+        <?php include_once ROOT_CSS . '/menu_left.php'; ?>
 
 
         <div class="content-wrapper">
@@ -61,8 +61,10 @@ include_once('../conn.php');
                                         <button type="button" id="btnRefresh" class="btn btn-primary"><i class="fas fa-sync-alt" aria-hidden="true"></i> Refresh</button>
                                     </div>
                                     <div class="btn-group" id="btnBack" style="display:none;" role="group" aria-label="Basic example">
-                                        <button type="button" class="btn btn-success"><i class="fa fa fa-tags" aria-hidden="true"></i>
-                                            ย้อนกลับ</button>
+                                        <button type="button" class="btn btn-success">
+                                            <i class="fa fa fa-tags" aria-hidden="true"></i>
+                                            ย้อนกลับ
+                                        </button>
                                     </div>
                                 </div>
                             </form>
@@ -73,7 +75,7 @@ include_once('../conn.php');
                         <div class="col-lg-12 col-12">
                             <table name="tableEmployer" id="tableEmployer" class="table table-bordered table-striped w-100"></table>
                         </div>
-                    </div> 
+                    </div>
                 </div>
             </section>
         </div>

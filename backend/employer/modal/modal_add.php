@@ -45,40 +45,72 @@
                     </div>
                     <div class="form-row">
                         <div class="col-md-6 col-sm-12">
-                            <label class="col-form-label">วันที่ </label>
+                            <label class="col-form-label">วันเกิด :</label>
                             <input type="date" class="form-control" name="empbirth" id="empbirth" required>
                         </div>
-                        <div class="col-md-6 col-sm-12">
-                            <label class="col-form-label">แนบไฟล์ :</label>
-                            <div class="file-list d-flex flex-column" style="gap:0.6rem;">
-                                <template>
+                    </div>
+                    <div class="form-row">
+                        <div class="file-group w-100 d-flex ">
+                            <div class="col-md-6 col-sm-12">
+                                <label class="col-form-label">ชื่อไฟล์ :
+                                    <small class="text-danger d-none">
+                                        <i class="fas fa-info-circle"></i>
+                                        กรุณากรอกชื่อไฟล์ก่อนแนบไฟล์ทุกครั้ง
+                                    </small>
+                                </label>
+                                <input type="text" class="form-control" name="attname" id="attname" value="" placeholder="กรุณากรอกชื่อไฟล์">
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <div class="file-list d-flex flex-column h-100 justify-content-end py-1" style="gap:0.6rem;">
                                     <div class="input-group">
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" name="atthFile" onchange="fileChange(this)">
-                                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                                        </div>
-                                        <div class="input-group-append d-none">
-                                            <button type="button" class="btn btn-sm rounded" onclick="removeFile(this)">
-                                                <i class="far fa-times-circle text-danger"></i>
+                                        <div class="custom-file h-100 justify-content-start" style="gap:10px;">
+                                            <input type="file" class="custom-file-input d-none" name="atthFile" onchange="fileChange(this)">
+                                            <small class="text-nowrap text-truncate attach-lable" style="max-width: 100%;">กรุณาแนบไฟล์...</small>
+                                            <button type="button" class="btn-at btn btn-sm btn-primary rounded-circle" uloadFile style="width: 30px;height: 30px;">
+                                                <i class="fas fa-paperclip"></i>
+                                            </button>
+                                            <button type="button" class="btn-dl btn btn-sm btn-danger rounded-circle d-none" onclick="removeFile(this)" style="width: 30px;height: 30px;">
+                                                <i class="fas fa-times text-white"></i>
                                             </button>
                                         </div>
-                                    </div>
-                                </template>
-                                <div class="input-group">
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" name="atthFile" onchange="fileChange(this)">
-                                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                                    </div>
-                                    <div class="input-group-append d-none">
-                                        <button type="button" class="btn btn-sm rounded" onclick="removeFile(this)">
-                                            <i class="far fa-times-circle text-danger"></i>
-                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </form>
+                <template form_upfile>
+                    <div class="form-row" addnew>
+                        <div class="file-group w-100 d-flex ">
+                            <div class="col-md-6 col-sms-12">
+                                <label class="col-form-label">
+                                    ชื่อไฟล์ :
+                                    <small class="text-danger d-none">
+                                        <i class="fas fa-info-circle"></i>
+                                        กรุณากรอกชื่อไฟล์ก่อนแนบไฟล์ทุกครั้ง
+                                    </small>
+                                </label>
+                                <input type="text" class="form-control" name="attname" id="attname" value="" placeholder="กรุณากรอกชื่อไฟล์">
+                            </div>
+                            <div class="col-md-6 col-sms-12">
+                                <div class="file-list d-flex flex-column h-100 justify-content-end py-1" style="gap:0.6rem;">
+                                    <div class="input-group">
+                                        <div class="custom-file h-100 justify-content-start" style="gap:10px;">
+                                            <input type="file" class="custom-file-input d-none" name="atthFile" onchange="fileChange(this)">
+                                            <small class="text-nowrap text-truncate attach-lable" style="max-width: 100%;">กรุณาแนบไฟล์...</small>
+                                            <button type="button" class="btn-at btn btn-sm btn-primary rounded-circle" uloadFile style="width: 30px;height: 30px;">
+                                                <i class="fas fa-paperclip"></i>
+                                            </button>
+                                            <button type="button" class="btn-dl btn btn-sm btn-danger rounded-circle d-none" onclick="removeFile(this)" style="width: 30px;height: 30px;">
+                                                <i class="fas fa-times text-white"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
             </div>
             <div class="modal-footer">
                 <div class="col text-center">

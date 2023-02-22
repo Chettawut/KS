@@ -51,6 +51,7 @@ $.widget.bridge('uibutton', $.ui.button)
 <script src="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
 <script src="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<script src="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/sweetalert2/sweetalert2.min.js"></script>
 <!-- <script src="AdminLTE-3.2.0/dist/js/demo.js"></script> -->
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <!-- <script src="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/dist/js/pages/dashboard.js"></script> -->

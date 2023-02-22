@@ -34,3 +34,5 @@ define('PATH_CSS', ROOT_CSS == $_SERVER['DOCUMENT_ROOT']
     href="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
 <link rel="stylesheet"
     href="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+<link rel="stylesheet" 
+    href="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">

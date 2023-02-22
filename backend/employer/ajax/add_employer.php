@@ -5,11 +5,13 @@ date_default_timezone_set('Asia/Bangkok');
 $path = dirname(__FILE__, 3);
 $pathUpload = "//uploads//";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_FILES["file"])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST" ) {//&& !empty($_FILES["file"])
     $idcode = $_POST["idcode"];
+    $passport = $_POST["passport"];
     $empname = $_POST["empname"];
     $lastname = $_POST["lastname"];
-
+    $empbirth = $_POST["empbirth"];
+    $titlename = $_POST["titlename"]; 
     $sql = "select * from employer where idcode = '$idcode' ";
     $query = mysqli_query($conn, $sql);
     $res = $query->fetch_assoc(); 
@@ -38,39 +40,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_FILES["file"])) {
     $qcode = $res ? (int)($res["empcode"]) + 1 : 1;
     $emp_code = sprintf("EM%04s", $qcode);
     $_form = $_POST;
-    $_form["empcode"] = $emp_code;
-    $_form["regisdate"] = date("Y-m-d");
-    $_form["status"] = "Y";
-    $_field = array();
-    $_value = array();
-    foreach ($_form as $k => $v) {
-        array_push($_field, $k);
-        array_push($_value, $v);
-    }
-    $col = join(",", $_field);
-    $val = join("','", $_value);
+    $empcode = $emp_code;
+    $regisdate = date("Y-m-d");
+    $status = "Y";
+    // $_field = array();
+    // $_value = array();
+    // foreach ($_form as $k => $v) {
+    //     array_push($_field, $k);
+    //     array_push($_value, $v);
+    // }
+    // $col = join(",", $_field);
+    // $val = join("','", $_value);
 
 
-    $file = $_FILES["file"];
+    
     $document = array();
-    for ($i = 0; $i < count($file["name"]); $i++) {
-        $file_temp = $file["tmp_name"][$i];
-        $f = $file["name"][$i];
-        $ext = pathinfo($f, PATHINFO_EXTENSION);
-        $file_name = sprintf("$emp_code-%02s.$ext", $i+1);
-        if (file_exists($filepath . $file_name)) continue;
+    if(!empty($_FILES["file"])){ 
+        $fileData = json_decode($_POST["fileData"], true);  
+        $file = $_FILES["file"];
+        for ($i = 0; $i < count($file["name"]); $i++) {
+            $file_temp = $file["tmp_name"][$i];
+            $f = $file["name"][$i];
+            $ext = pathinfo($f, PATHINFO_EXTENSION);
+            $file_name = sprintf("$emp_code-%02s.$ext", $i+1);
+            if (file_exists($filepath . $file_name)) continue;
 
-        if (move_uploaded_file($file_temp, $filepath . $file_name)) {
-            if (file_exists($filepath . $file_name) != 1)  continue;
-
-            array_push($document, array("url" => $pathUpload . $pathDocument . $file_name, "attname" => $file_name));
+            if (move_uploaded_file($file_temp, $filepath . $file_name)) {
+                if (file_exists($filepath . $file_name) != 1)  continue;
+                $att_name = $fileData[$i]["attname"];
+                array_push($document, array("url" => $pathUpload . $pathDocument . $file_name, "attname" => $att_name, "attno" => $i+1 ));
+            }
         }
     }
 
     //$conn->autocommit(FALSE); 
     $conn->begin_transaction();
     try {
-        $conn->query("INSERT INTO employer($col) VALUES ('$val')");
+        $sql = "INSERT INTO employer (empcode,empname,lastname,titlename,idcode,empbirth,regisdate,passport,status) VALUES (?,?,?,?,?,?,?,?,'Y')"; // sql
+        $data = [$empcode,$empname,$lastname,$titlename,$idcode,$empbirth,$regisdate,$passport]; // put your data into array
+        $stmt = $conn->prepare($sql); // prepare
+        $stmt->bind_param(str_repeat('s', count($data)), ...$data); // bind array at once
+        $stmt->execute();
+ 
         $conn->query("UPDATE `option` SET empcode = $qcode");
 
         foreach ($document as $i => $v) {
@@ -87,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_FILES["file"])) {
         mysqli_close($conn);
 
         header('Status: 200');
-        echo json_encode(array('status' => '1', 'message' => "เพิ่มเคสลูกค้า $empname $lastname สำเร็จ"));
+        echo json_encode(array('status' => '1', 'message' => "เพิ่มนายจ้าง $empname $lastname สำเร็จ"));
     } catch (mysqli_sql_exception $exception) {
         $conn->rollback();
         mysqli_close($conn);
@@ -100,3 +111,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_FILES["file"])) {
     echo "Incorrect Parameter";
 }
 exit;
+
+ 
