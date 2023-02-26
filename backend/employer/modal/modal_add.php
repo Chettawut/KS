@@ -1,4 +1,4 @@
-<div class="modal fade bd-example-modal-xl" tabindex="-1" id="modal_add" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+<div class="modal fade bd-example-modal-xl" tabindex="-1" id="modal_add" role="dialog"  data-backdrop="static" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content w3-flat-turquoise">
             <div class="modal-header bg-gradient-secondary">
@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form name="frmAddEmployer" id="frmAddEmployer" method="POST" style="padding:10px;" action="javascript:void(0);" enctype="multipart/form-data">
+                <form name="frmAddEmployer" id="frmAddEmployer" method="POST" class="pb-4 bt-3" action="javascript:void(0);" enctype="multipart/form-data">
                     <div class="form-row">
                         <div class="col-md-6 col-sm-12 d-flex gap-2" style="gap: 8px;">
                             <div class="col-msd-3 p-0">
@@ -49,68 +49,37 @@
                             <input type="date" class="form-control" name="empbirth" id="empbirth" required>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="file-group w-100 d-flex ">
-                            <div class="col-md-6 col-sm-12">
-                                <label class="col-form-label">ชื่อไฟล์ :
-                                    <small class="text-danger d-none">
-                                        <i class="fas fa-info-circle"></i>
-                                        กรุณากรอกชื่อไฟล์ก่อนแนบไฟล์ทุกครั้ง
-                                    </small>
-                                </label>
-                                <input type="text" class="form-control" name="attname" id="attname" value="" placeholder="กรุณากรอกชื่อไฟล์">
-                            </div>
-                            <div class="col-md-6 col-sm-12">
-                                <div class="file-list d-flex flex-column h-100 justify-content-end py-1" style="gap:0.6rem;">
-                                    <div class="input-group">
-                                        <div class="custom-file h-100 justify-content-start" style="gap:10px;">
-                                            <input type="file" class="custom-file-input d-none" name="atthFile" onchange="fileChange(this)">
-                                            <small class="text-nowrap text-truncate attach-lable" style="max-width: 100%;">กรุณาแนบไฟล์...</small>
-                                            <button type="button" class="btn-at btn btn-sm btn-primary rounded-circle" uloadFile style="width: 30px;height: 30px;">
-                                                <i class="fas fa-paperclip"></i>
-                                            </button>
-                                            <button type="button" class="btn-dl btn btn-sm btn-danger rounded-circle d-none" onclick="removeFile(this)" style="width: 30px;height: 30px;">
-                                                <i class="fas fa-times text-white"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </form>
-                <template form_upfile>
-                    <div class="form-row" addnew>
-                        <div class="file-group w-100 d-flex ">
-                            <div class="col-md-6 col-sms-12">
-                                <label class="col-form-label">
-                                    ชื่อไฟล์ :
-                                    <small class="text-danger d-none">
-                                        <i class="fas fa-info-circle"></i>
-                                        กรุณากรอกชื่อไฟล์ก่อนแนบไฟล์ทุกครั้ง
-                                    </small>
-                                </label>
-                                <input type="text" class="form-control" name="attname" id="attname" value="" placeholder="กรุณากรอกชื่อไฟล์">
-                            </div>
-                            <div class="col-md-6 col-sms-12">
-                                <div class="file-list d-flex flex-column h-100 justify-content-end py-1" style="gap:0.6rem;">
-                                    <div class="input-group">
-                                        <div class="custom-file h-100 justify-content-start" style="gap:10px;">
-                                            <input type="file" class="custom-file-input d-none" name="atthFile" onchange="fileChange(this)">
-                                            <small class="text-nowrap text-truncate attach-lable" style="max-width: 100%;">กรุณาแนบไฟล์...</small>
-                                            <button type="button" class="btn-at btn btn-sm btn-primary rounded-circle" uloadFile style="width: 30px;height: 30px;">
-                                                <i class="fas fa-paperclip"></i>
-                                            </button>
-                                            <button type="button" class="btn-dl btn btn-sm btn-danger rounded-circle d-none" onclick="removeFile(this)" style="width: 30px;height: 30px;">
-                                                <i class="fas fa-times text-white"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+                <div class="section-attach-file">
+                    <div class="card">
+                        <div class="card-header border-0 w-100 d-flex align-items-center justify-content-between">
+                            <h4 class="card-title col-6" style="font-size: 0.9rem; font-weight: 600;">รายการ ไฟล์แนบ</h4>
+                            <div class="card-tools col-6 text-right">
+                                <a href="#" class="btn btns-tool btn-sm btn-secondary" data-toggle="modal" data-target="#modal-attach" onclick="openMgnFile('#attachFileList')" >
+                                    <i class="fas fa-paperclip mr-2"></i>
+                                    <span>แนบไฟล์เอกสาร</span>
+                                </a>
                             </div>
                         </div>
+                        <div class="card-body table-responsives overflow-auto pt-0" style="max-height:36vh;">
+                            <table class="table table-striped table-valign-middle table-bordered table-hovers" id="attachFileList">
+                                <thead class="sticky-top table-secondary">
+                                    <tr>
+                                        <th style="width: 75px; text-align: center;">ลำดับ</th>
+                                        <th style="min-width: 100px;">หัวข้อไฟล์</th>
+                                        <th style="min-width: 300px;">ไฟล์แนบ</th>
+                                        <th style="width: 125px; text-align: center;">ตัวเลือก</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="4" align="center" class="bg-secondary">ไม่มีข้อมูลไฟล์</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </template>
+                </div>
             </div>
             <div class="modal-footer">
                 <div class="col text-center">

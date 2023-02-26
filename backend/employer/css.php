@@ -11,5 +11,8 @@
     #tableEmployer > tbody > tr > td:last-child{
         text-align: center;
     }
-
+    a:hover {
+        color: #0056b3;
+        text-decoration: underline !important;
+    }
 </style>

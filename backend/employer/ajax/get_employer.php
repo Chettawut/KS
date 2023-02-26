@@ -1,7 +1,12 @@
 <?php
+	session_start();
 	header('Content-Type: application/json');
-	include('../../conn.php');
-	
+	include('../../conn.php'); 
+	if (!isset($_SESSION['loggedin'])) {
+		http_response_code(400);
+		echo json_encode(array('status' => '0', 'message' => 'Session not found.'));
+		die;
+	}	
 	$sql = "SELECT * FROM employer;"; 
 	$query = mysqli_query($conn,$sql);
 	// Fetch all

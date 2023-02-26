@@ -95,6 +95,7 @@ include_once('../conn.php');
 
         <?php include_once('modal/modal_add.php'); ?>
         <?php include_once('modal/modal_edit.php'); ?>
+        <?php include_once('modal/modal_attach_file.php'); ?>
 
     </div>
 
