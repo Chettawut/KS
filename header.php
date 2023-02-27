@@ -3,36 +3,36 @@ include_once('config.php');
 ?>
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-        <div class="container">
-            <a class="navbar-brand" href="<?php echo PATH; ?>">เทพกระษัตรี 2019 คอนสตรัคชั่น</a>
-            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
-                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
-                aria-label="Toggle navigation">
-                Menu
-                <i class="fas fa-bars"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?php echo PATH; ?>">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?php echo PATH; ?>">ติดต่อเรา</a>
-                    </li>
-                    
-                    <!-- <li class="nav-item">
+    <div class="container">
+        <a class="navbar-brand" href="<?php echo PATH; ?>">เทพกระษัตรี 2019 คอนสตรัคชั่น</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+            data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+            aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo PATH; ?>">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo PATH; ?>">ติดต่อเรา</a>
+                </li>
+
+                <!-- <li class="nav-item">
             <a class="nav-link" href="post.html">Sample Post</a>
           </li> -->
-                    <!-- <li class="nav-item">
+                <!-- <li class="nav-item">
                         <a class="nav-link" href="">About</a>
                     </li> -->
-                </ul>
-            </div>
+            </ul>
         </div>
-    </nav>
+    </div>
+</nav>
 
-    <!-- Page Header -->
-    <header class="masthead" style="background-image: url('<?php echo PATH; ?>/img/home-bg.jpg')">
+<!-- Page Header -->
+<header class="masthead" style="background-image: url('<?php echo PATH; ?>/img/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
         <div class="row">
@@ -41,7 +41,9 @@ include_once('config.php');
 
                     <body>
                         <div class="login">
-                            <h1> <img src="img/logo.jpg" width="100px;"></h1>
+                            <!-- <h1> <img src="img/logo.jpg" width="100px;"></h1> -->
+                            &nbsp;
+
                             <form action="login_result.php" method="post">
 
                                 <label for="username">
@@ -64,6 +66,6 @@ include_once('config.php');
             </div>
         </div>
 
-        
+
     </div>
 </header>

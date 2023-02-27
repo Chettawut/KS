@@ -20,7 +20,7 @@
         </div>
         <nav class="mt-2" >
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                <li class="nav-header">Systems</li>
+                <!-- <li class="nav-header">Systems</li>
                 <li class="nav-item">
                     <a href="<?php echo PATH; ?>/backend/customer" class="nav-link">
                         <i class="nav-icon fas fa-clipboard"></i>
@@ -28,16 +28,8 @@
                         เคสลูกค้า (Customer)
                         </p>
                     </a>
-                </li>
-                <li class="nav-header">Data</li>
-                <li class="nav-item">
-                    <a href="<?php echo PATH; ?>/backend/user" class="nav-link">
-                        <i class="nav-icon fas fa-users"></i>
-                        <p>
-                        จัดการผู้ใช้งาน (User)
-                        </p>
-                    </a>
-                </li>
+                </li> -->
+                <li class="nav-header">Data</li>                
                 <li class="nav-item">
                     <a href="<?php echo PATH; ?>/backend/employer" class="nav-link">
                         <i class="nav-icon fas fa-user-tie"></i>
@@ -51,11 +43,19 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="<?php echo PATH; ?>/backend/user" class="nav-link">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>
+                        จัดการผู้ใช้งาน (User)
+                        </p>
+                    </a>
+                </li>
+                <!-- <li class="nav-item">
                     <a href="<?php echo PATH; ?>/backend/employment" class="nav-link">
                         <i class="nav-icon fas fa-users-cog"></i>
                         <p>จัดการ การจ้าง</p>
                     </a>
-                </li>
+                </li> -->
             </ul>
         </nav>
 
