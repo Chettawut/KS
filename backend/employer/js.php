@@ -194,7 +194,7 @@
             _fileList.push({
                 attname: attach[i].attname,
                 file: {
-                    name: `<a href="ajax/load_attachfile.php?path=${attach[i].url}" >${_f}</a>`
+                    name: `<a href="ajax/load_attachfile.php?path=${attach[i].url}" target="_BLANK" >${_f}</a>`
                 },
                 attached: true,
                 code: attach[i].code,
