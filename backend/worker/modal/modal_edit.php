@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content w3-flat-turquoise">
             <div class="modal-header bg-gradient-secondary">
-                <h5 class="modal-title">แก้ไขนายจ้าง</h5>
+                <h5 class="modal-title">แก้ไขลูกจ้าง</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -43,11 +43,19 @@
                             <input type="text" class="form-control" name="passport" id="passport" value="" required>
                         </div>
                     </div>
+
                     <div class="form-row">
                         <div class="col-md-6 col-sm-12">
                             <label class="col-form-label">วันเกิด :</label>
-                            <input type="date" class="form-control" name="wkbirth" id="wkbirth" required>
+                            <input type="date" name="wkbirth" id="wkbirth" class="form-control" required>
                         </div>
+                        <div class="col-md-6 col-sm-12">
+                            <label class="col-form-label">วันหมดอายุ พาสปอร์ต:</label>
+                            <input type="date" name="passportexpired" id="passportexpired" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
                         <div class="col-md-6 col-sm-12">
                             <label class="col-form-label">นายจ้าง :</label>
                             <select class="form-control select2 select2-hidden-accessible" style="width: 100%; height: 100%;" name="empcode" data-placeholder="เลือกนายจ้าง" data-allow-clear="true">

@@ -27,7 +27,7 @@ const HEADER = [
         title: "ตัวเลือก",
     },
 ];
-
+const FILE_REQUIRED = ["application/pdf", "image/jpg", "image/png", "image/jpeg"];
 function fileChange(e) {
     const countFile = $("#frmEditCustomer [name=atthFile]").length;
     const file = $(e)[0]?.files[0];
@@ -60,7 +60,10 @@ function removeFile(e) {
 }
 
 async function gettingWorker() {
-    let res = await $.get("ajax/get_worker.php");
+    let res = (await $.get("ajax/get_worker.php").catch(async (e) => {
+        let res = e.responseJSON;
+        await Swal.fire("มีข้อผิดพลาดเกิดขึ้น", res.message, "error");
+    })) || [];
 
     return res;
 }
@@ -70,8 +73,8 @@ async function gettingFile(code) {
         (await $.get("ajax/get_attachfile.php", {
             wkcode: code,
         }).catch(async (e) => {
-            let res = error.responseJSON;
-            await Swal.fire("มีข้อผิดพลาดเกิดขึ้น", res.message, "error");
+            let res = e.responseJSON;
+            await Swal.fire("มีข้อผิดพลาดเกิดขึ้น", res?.message, "error");
         })) || [];
 
     return res;
@@ -79,8 +82,8 @@ async function gettingFile(code) {
 
 async function gettingoptionEmployer(wkcode) {
     let res = (await $.get("ajax/get_optionemployer.php").catch(async (e) => {
-        let res = error.responseJSON;
-        await Swal.fire("มีข้อผิดพลาดเกิดขึ้น", res.message, "error");
+        let res = e.responseJSON;
+        await Swal.fire("มีข้อผิดพลาดเกิดขึ้น", res?.message, "error");
     })) || [];
 
     return res;
@@ -121,10 +124,15 @@ function actionRow(row, data, dataIndex) {
     $(row).attr("id-ref", data[0]);
 }
 
-function attached(e, t) {
+async function attached(e, t) {
     const modal = $(e.target).parents("div.modal");
     const n = $(e.target);
     const f = n[0].files[0];
+    if(!FILE_REQUIRED.includes(f.type)){
+        await Swal.fire(`ไฟล์ชนิดนี้ไม่ได้รับอนุญาตให้แนบ`, `กรุณาแนบไฟล์นามสกุลที่อนุญาติเท่านั้น`, 'warning');
+        n.val(null);
+        return;
+    }
     const f_result = modal.find(".file-result");
     const t_result = $(f_result.html());
     const e_result = f_result.find(".f-empty");
@@ -191,7 +199,7 @@ function genarateRow(t) {
     }
     setTimeout(() => {
         $(`${t} tbody`).html(tr.join(""));
-    }, 200);
+    }, 20);
 }
 
 async function editRow(e, index) {
@@ -292,13 +300,7 @@ $(document).on("click", "#summit-file", function () {
     }
 
     //$("#attachFileList")
-});
-
-$("#modal-attach").on("show.bs.modal", function (event) {
-    // var b = $(event.relatedTarget);
-    // var r = b.data('actable');
-    // $(this).attr("actable", r);
-});
+}); 
 
 $(document).on("hidden.bs.modal", "#modal-attach", function () {
     $("body").addClass("modal-open");

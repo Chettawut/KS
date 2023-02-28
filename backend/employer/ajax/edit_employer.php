@@ -14,6 +14,9 @@ $pathUpload = "//uploads//";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     extract($_POST, EXTR_OVERWRITE, "_"); 
+
+    $FILE_REQUIRED = array("application/pdf", "image/jpg", "image/png", "image/jpeg");
+
     $sql = "select * from employer where idcode = '$idcode' and empcode != '$empcode' ";
     $query = mysqli_query($conn, $sql);
     $res = $query->fetch_assoc();
@@ -77,8 +80,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $file_attach = $_FILES["file$file_code"]; 
                     $file_temp = $file_attach["tmp_name"];
                     $file_name = $file_attach["name"];
+                    $file_type = $file_attach["type"];
                     $ext = pathinfo($file_name, PATHINFO_EXTENSION);
-                    
+
+                    if( !in_array($file_type, $FILE_REQUIRED) ){
+                        throw new Exception("File attach incorrect.");
+                        die;
+                    } 
+
                     if (file_exists($path . $file_url)) unlink($path . $file_url);
                     
                     $file_url = $pathUpload . $empcode . "//" . $file_oldName . '.'. $ext;
@@ -105,9 +114,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             for ($i = 0; $i < count($file["name"]); $i++) {
                 $file_temp = $file["tmp_name"][$i];
                 $f = $file["name"][$i];
+                $t = $file["type"][$i];
                 $ext = pathinfo($f, PATHINFO_EXTENSION);
                 $file_name = sprintf("$empcode-%02s.$ext", $i + $max_attno);
 
+                if( !in_array($t, $FILE_REQUIRED) ){
+                    throw new Exception("File attach incorrect.");
+                    die;
+                } 
                 //if (file_exists($filepath . $file_name)) continue;
 
                 if (!move_uploaded_file($file_temp, $filepath . $file_name)) {

@@ -1,7 +1,9 @@
 <?php
-define('ROOT_CSS',str_replace("\\",'/',dirname(__FILE__)));
-define('PATH_CSS', ROOT_CSS == $_SERVER['DOCUMENT_ROOT']
-    ?'' :substr(ROOT_CSS,strlen($_SERVER['DOCUMENT_ROOT']))
+define('ROOT_CSS', str_replace("\\", '/', dirname(__FILE__)));
+define(
+    'PATH_CSS',
+    ROOT_CSS == $_SERVER['DOCUMENT_ROOT']
+        ? '' : substr(ROOT_CSS, strlen($_SERVER['DOCUMENT_ROOT']))
 );
 ?>
 <!-- Google Font: Source Sans Pro -->
@@ -11,30 +13,22 @@ define('PATH_CSS', ROOT_CSS == $_SERVER['DOCUMENT_ROOT']
 <!-- Ionicons -->
 <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 <!-- Tempusdominus Bootstrap 4 -->
-<link rel="stylesheet"
-    href="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+<link rel="stylesheet" href="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
 <!-- iCheck -->
-<link rel="stylesheet"
-    href="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+<link rel="stylesheet" href="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
 <!-- JQVMap -->
 <link rel="stylesheet" href="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/jqvmap/jqvmap.min.css">
 <!-- Theme style -->
 <link rel="stylesheet" href="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/dist/css/adminlte.min.css">
 <!-- overlayScrollbars -->
-<link rel="stylesheet"
-    href="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+<link rel="stylesheet" href="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
 <!-- Daterange picker -->
 <link rel="stylesheet" href="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/daterangepicker/daterangepicker.css">
 <!-- summernote -->
 <link rel="stylesheet" href="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/summernote/summernote-bs4.min.css">
 
-<link rel="stylesheet"
-    href="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-<link rel="stylesheet"
-    href="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-<link rel="stylesheet"
-    href="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-<link rel="stylesheet" 
-    href="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
-<link rel="stylesheet" 
-    href="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/select2/css/select2.min.css">
+<link rel="stylesheet" href="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet" href="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+<link rel="stylesheet" href="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+<link rel="stylesheet" href="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/select2/css/select2.min.css"> 

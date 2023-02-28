@@ -22,7 +22,7 @@
             }],
             createdRow: actionRow
         }
-        tables("#tableWorker", HEADER, dataArray, configTb);
+        tables("#tableWorker", HEADER, dataArray, configTb); 
     });
 
     $("#btnRefresh").click(function() {
@@ -35,7 +35,7 @@
         $(':disabled').each(function(event) {
             $(this).removeAttr('disabled');
         });
-        let form = $(this).serializeArray(); 
+        let form = $(this).serializeArray();
         let formData = new FormData();
         if (_fileList.length > 0) {
             let _i = 0;
@@ -55,7 +55,7 @@
         for (let f of form) {
             formData.append(f.name, f.value);
         }
- 
+
         $.ajax({
             type: "POST",
             url: "ajax/add_worker.php",
@@ -90,7 +90,7 @@
         let formData = new FormData();
 
         let fileUpdate = _fileList.filter(f => f?.upd);
-        let fileAttach = _fileList.filter(f => !f.attached);  
+        let fileAttach = _fileList.filter(f => !f.attached);
 
         for (let f of fileUpdate) {
             if (f.udf) formData.append(`file${f.code}`, f.file);
@@ -100,13 +100,13 @@
             _fileFormData.push({
                 attname: f.attname,
                 file_name: !f.udf ? f.attname : null,
-                code:f.code,
-                url:a.url,
-                percode:a.percode,
-                fname:r.slice( 0, r.lastIndexOf(".")),
-            }); 
-        } 
-        
+                code: f.code,
+                url: a.url,
+                percode: a.percode,
+                fname: r.slice(0, r.lastIndexOf(".")),
+            });
+        }
+
         for (let f of fileAttach) {
             formData.append("file[]", f.file);
             formData.append("attname[]", f.attname);
@@ -114,9 +114,9 @@
 
         for (let f of form) {
             formData.append(f.name, f.value);
-        } 
+        }
 
-        formData.append("fileData", JSON.stringify(_fileFormData));        
+        formData.append("fileData", JSON.stringify(_fileFormData));
         formData.append("fileDelete", JSON.stringify(_filesDelete));
         formData.append("wkcode", wkcode);
         $.ajax({
@@ -158,40 +158,13 @@
         }
     });
 
-    $(document).on("click", "button.btn-edit", function() {
+    $(document).on("click", "button.btn-edit", async function() {
         let modal = $("#modal_edit");
         let parent = $(this).closest("tr");
 
         let wkcode = parent.attr("id-ref");
         modal.attr("data-wkcode", wkcode);
 
-        $("#modal_edit").modal({
-            backdrop: false
-        });
-        $("#modal_edit").modal("show");
-    });
-
-    $(document).on("show.bs.modal", "#modal_add", function() {
-        const m = $(this);
-        m.find("select[name=empcode]").select2({
-            destroy: true,
-            data: _employer_option,
-        }).val(null).trigger('change'); 
-    });
-
-    $(document).on("show.bs.modal", "#modal_edit", async function(e) {
-        let modal = $(this);
-        let wkcode = modal.attr("data-wkcode");
-        let worker = (_workerList.filter(f => f.wkcode == wkcode))[0];
-        Object.keys(worker).forEach((f, k) => {
-            modal.find(`.modal-body [name=${f}]`).val(worker[f]);
-        });
-        
-        modal.find("select[name=empcode]").select2({
-            destroy: true,
-            data: _employer_option,
-        }).val(null).trigger('change');
-        
         _attachList = await gettingFile(wkcode);
         _fileList = [];
         let attach = _attachList;
@@ -208,14 +181,38 @@
             })
         };
         genarateRow("#attachFileListEdit");
+        $("#modal_edit").modal("show");
+    });
+
+    $(document).on("show.bs.modal", "#modal_add", function() {
+        const m = $(this);
+        m.find("select[name=empcode]").select2({
+            destroy: true,
+            data: _employer_option,
+        }).val(null).trigger('change');
+    });
+
+    $(document).on("show.bs.modal", "#modal_edit", async function(e) {
+        let modal = $(this);
+        let wkcode = modal.attr("data-wkcode");
+        let worker = (_workerList.filter(f => f.wkcode == wkcode))[0];
+        Object.keys(worker).forEach((f, k) => {
+            modal.find(`.modal-body [name=${f}]`).val(worker[f]);
+        });
+
+        modal.find("select[name=empcode]").select2({
+            destroy: true,
+            data: _employer_option,
+        }).val(worker['empcode']).trigger('change');
+
+
 
     });
 
-    $(document).on("hidden.bs.modal", "#modal_edit", function() { 
-        let model = $(this); 
+    $(document).on("hidden.bs.modal", "#modal_edit", function() {
+        let model = $(this);
         _attachList = [];
         _fileList = [];
         genarateRow("#attachFileListEdit");
-    }); 
- 
+    });
 </script>

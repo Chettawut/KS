@@ -27,22 +27,26 @@
                                 <i class="fas fa-paperclip mr-2"></i>
                                 <span>คลิกแนบแนบไฟล์เอกสาร</span>
                             </a>
-                            <input type="file" class="custom-file-input d-none" name="atthFile" onchange="attached(event, '#attachFileList')">
+                            <input type="file" accept="image/*,.pdf" class="custom-file-input d-none" name="atthFile" onchange="attached(event, '#attachFileList')">
+                            <p class="text-danger m-0 mt-2" style="font-size: 0.8rem;">
+                                <i class="fas fa-info mr-2"></i>
+                                <span>ต้องแนบไฟล์ที่นามสกุล .pdf, .png, .jpg, .jpeg เท่านั้น</span>
+                            </p>
                         </div>
-                    </div> 
+                    </div>
                 </div>
                 <div class="file-result">
-                    <div class="d-flex attach-result f-empty border rounded-sm align-items-center justify-content-center px-3" style="min-height:clamp(60px, 10vh, 300px);" >
-                         <span class="mi d-flex align-items-center p-2 h1 m-0">
+                    <div class="d-flex attach-result f-empty border rounded-sm align-items-center justify-content-center px-3" style="min-height:clamp(60px, 10vh, 300px);">
+                        <span class="mi d-flex align-items-center p-2 h1 m-0">
                             <i class="fas fa-file text-black-50"></i>
-                         </span>   
-                         <span class="ms text-black-50">ไม่มีไฟล์แนบ...</span>
+                        </span>
+                        <span class="ms text-black-50">ไม่มีไฟล์แนบ...</span>
                     </div>
                 </div>
             </div>
             <div class="modal-footer justify-content-center">
                 <button type="button" class="btn btn-secondary" id="cancel-file">ยกเลิก</button>
-                <button type="button" class="btn btn-primary" id="summit-file" >ตกลง</button>
+                <button type="button" class="btn btn-primary" id="summit-file">ตกลง</button>
             </div>
         </div>
     </div>
