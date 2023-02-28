@@ -102,7 +102,7 @@
                      window.location.reload();
                      // console.log(result.message);
                  } else {
-                     Swal.fire('เกิดข้อผิดพลาด', "เกิดปัญหาในหารเพิ่มข้อมูลกรุณาลิงใหม่อีกครั้ง", 'error')
+                     Swal.fire('เกิดข้อผิดพลาด', "เกิดปัญหาในหารเพิ่มข้อมูลกรุณาลองใหม่อีกครั้ง", 'error')
                  }
              },
              error: function(error) {
