@@ -6,6 +6,7 @@
 	$query = mysqli_query($conn,$strSQL);
 	
 	$json_result=array(
+		"code" => array(),
         "username" => array(),
 		"password" => array(),
 		"firstname" => array(),
@@ -17,6 +18,7 @@
 		
         );
         while($row = $query->fetch_assoc()) {
+			array_push($json_result['code'],$row["code"]);
             array_push($json_result['username'],$row["username"]);
 			array_push($json_result['password'],$row["password"]);
 			array_push($json_result['firstname'],$row["firstname"]);

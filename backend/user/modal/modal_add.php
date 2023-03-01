@@ -34,12 +34,9 @@
                     <div class="form-row">
                         <div class="col-md-6">
                             <label class="col-form-label">ประเภท</label>
-                            <select class="form-control" name="usertype" id="usertype">
-                                <option value="01">Store</option>
-                                <option value="02">Sales Leader</option>
-                                <option value="03">Accounting</option>
-                                <option value="04">Manager</option>
-                                <option value="05">Sales</option>
+                            <select class="form-control" name="usertype" id="usertype">                            
+                                <option value="01">ฝ่ายขาย</option>
+                                <option value="02">คนจัดเก็บข้อมูล</option>
                                 <option value="99">Admin</option>
                             </select>
                         </div>

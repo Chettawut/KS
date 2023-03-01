@@ -20,6 +20,8 @@
                                     <option value="นาง">นาง</option>
                                     <option value="ว่าที่ร้อยตรี">ว่าที่ร้อยตรี</option>
                                     <option value="ดร.">ดร.</option>
+                                    <option value="บจก.">บจก.</option>
+                                    <option value="หจก.">หจก.</option>
                                 </select>
                             </div>
                             <div class="col-md-9 p-0">

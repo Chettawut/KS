@@ -5,11 +5,11 @@
     date_default_timezone_set("Asia/Bangkok");
     
     
-    $password = password_hash($_POST['editpassword'], PASSWORD_DEFAULT);
+    
     $strSQL = "UPDATE user SET ";
-    $strSQL .= "username='".$_POST["editusername"]."',password='".$password."',firstname='".$_POST["editfirstname"]."',lastname='".$_POST["editlastname"]."',salecode='".$_POST["editsalecode"]."' ";
+    $strSQL .= "username='".$_POST["editusername"]."',firstname='".$_POST["editfirstname"]."',lastname='".$_POST["editlastname"]."' ";
     $strSQL .= ",email='".$_POST["editemail"]."',type='".$_POST["edittype"]."',status='".$_POST["editstatus"]."',date='".date("Y-m-d H:i:s")."'";
-    $strSQL .= "WHERE username= '".$_POST["editusername"]."' ";
+    $strSQL .= "WHERE code= '".$_POST["code"]."' ";
 
     
 	$query = mysqli_query($conn,$strSQL);

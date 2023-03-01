@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>เทพกระษัตรี 2019 คอนสตรัคชั่น
+    <title>เทพกระษัตรี2019 ( ศูนย์ประสานงานช่วยเหลือแรงงานภูเก็ต )
     </title>
 
     <?php include_once('css.php'); ?>
@@ -41,10 +41,10 @@
         margin: 100px auto;
     }
 
-    .login h1 {
+    .login h4 {
         text-align: center;
         color: #5b6574;
-        font-size: 26px;
+        font-size: 24px;
         padding: 15px 0 10px 0;
         border-bottom: 1px solid #83AF9B;
     }
@@ -123,91 +123,6 @@
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto">
                 
-                <!-- <div class="post-preview">
-                    <a href="<?php echo PATH; ?>/register">
-                        <h2 class="post-title">
-                            เปิดรับสมัครงาน
-                        </h2>
-                        <h3 class="post-subtitle">
-                            พนักงานฝ่ายขาย <br>
-                            พนักงานขายประจำภาคอีสาน ภาคเหนือ ภาคใต้ และภาคกลาง
-                        </h3>
-                    </a>
-                    <p class="post-meta">Posted by
-                        <a href="#">Admin</a>
-                        on 18 มกราคม , 2021</p>
-                </div> -->
-
-                <!-- <hr> -->
-                <!-- <div class="post-preview">
-                    <a href="post.html">
-                        <h2 class="post-title">
-                            อยู่ในช่วงพัฒนา
-                        </h2>
-                    </a>
-                    <p class="post-meta">Posted by
-                        <a href="#">Start Bootstrap</a>
-                        on September 18, 2019</p>
-                </div> -->
-                <!-- <hr>
-        <div class="post-preview">
-          <a href="post.html">
-            <h2 class="post-title">
-              Science has not yet mastered prophecy
-            </h2>
-            <h3 class="post-subtitle">
-              We predict too much for the next year and yet far too little for the next ten.
-            </h3>
-          </a>
-          <p class="post-meta">Posted by
-            <a href="#">Start Bootstrap</a>
-            on August 24, 2019</p>
-        </div>
-        <hr>
-        <div class="post-preview">
-          <a href="post.html">
-            <h2 class="post-title">
-              Failure is not an option
-            </h2>
-            <h3 class="post-subtitle">
-              Many say exploration is part of our destiny, but it’s actually our duty to future generations.
-            </h3>
-          </a>
-          <p class="post-meta">Posted by
-            <a href="#">Start Bootstrap</a>
-            on July 8, 2019</p>
-        </div>
-        <hr> -->
-                <!-- Pager -->
-
-                <!-- <div class="clearfix">
-          <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>
-        </div> -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-css">
-                <div class="login">
-                    
-                    <h1> <img src="img/logo.png" width="90px;"></h1>
-                    <form action="login_result.php" method="post">
-                        
-                        <label for="username">
-                            <i class="fas fa-user"></i>
-                        </label>
-                        <input type="text" name="username" placeholder="Username" id="username" required>
-                        <label for="password">
-                            <i class="fas fa-lock"></i>
-                        </label>
-                        <input type="password" name="password" placeholder="Password" id="password" required>
-                        <input type="submit" value="Login">
-                    </form>
-                </div>
             </div>
         </div>
     </div>
