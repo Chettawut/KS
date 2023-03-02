@@ -20,6 +20,9 @@ const HEADER = [
         title: "พาสปอร์ต",
     },
     {
+        title: "เบอร์โทรศัพท์"
+    },
+    {
         title: "สถานะ",
     },
     {
@@ -100,6 +103,7 @@ function setRowTable(m) {
         m.lastname,
         m.idcode,
         m.passport,
+        m.tel,
         `<span class="label badge ${m.status == "Y" ? "bg-success" : "bg-danger"} label-white middle">${m.status == "Y" ? "ใช้งาน" : "ไม่ใช้งาน"}</span>`,
         `<div>
            <button class="btn btn-sm rounded btn-primary btn-edit" data-empcode="${m.empcode}">

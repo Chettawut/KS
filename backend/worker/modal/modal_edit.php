@@ -47,7 +47,7 @@
                     <div class="form-row">
                         <div class="col-md-6 col-sm-12">
                             <label class="col-form-label">วันเกิด :</label>
-                            <input type="date" name="wkbirth" id="wkbirth" class="form-control" required>
+                            <input type="date" name="wkbirth" id="wkbirth" class="form-control" />
                         </div>
                         <div class="col-md-6 col-sm-12">
                             <label class="col-form-label">วันหมดอายุ พาสปอร์ต:</label>

@@ -10,23 +10,7 @@ if (!isset($_SESSION['loggedin'])) {
 }
 
 try {
-	$sql = "
-	select w.*, em.empcode, em.empname, em.lastname as emp_lastname
-	from worker w
-	left outer join
-	(
-		select e.empcode, e.wkcode, e.code, e2.empname, e2.lastname
-		from employment e 
-		inner join employer e2 on e.empcode = e2.empcode
-		where e.status  = 'Y' 
-		and e.code = 
-		(
-			select max(s.code)
-			from employment s 
-			where s.status  = 'Y' and s.wkcode = e.wkcode 
-		)
-	) em on w.wkcode = em.wkcode
-	order by w.wkcode desc;";
+	$sql = "select * from somaster order by socode desc, sodate asc;";
 	$stmt = $conn->prepare($sql);  
 	if (!$stmt->execute()){
 		throw new mysqli_sql_exception("Insert data error."); 

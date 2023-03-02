@@ -1,14 +1,14 @@
-<div class="modal fade bd-example-modal-xl" tabindex="-1" id="modal_edit" role="dialog" data-backdrop="static" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+<div class="modal fade bd-example-modal-xl" tabindex="-1" id="modal_edit" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content w3-flat-turquoise">
             <div class="modal-header bg-gradient-secondary">
-                <h5 class="modal-title">แก้ไขนายจ้าง</h5>
+                <h5 class="modal-title">แก้ไขลูกจ้าง</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form name="frmEditCustomer" id="frmEditCustomer" method="POST" style="padding:10px;" action="javascript:void(0);" enctype="multipart/form-data">
+                <form name="frmEditWorker" id="frmEditWorker" method="POST" style="padding:10px;" action="javascript:void(0);" enctype="multipart/form-data">
                     <div class="form-row">
                         <div class="col-md-6 col-sm-12 d-flex gap-2" style="gap: 8px;">
                             <div class="col-msd-3 p-0">
@@ -20,40 +20,47 @@
                                     <option value="นาง">นาง</option>
                                     <option value="ว่าที่ร้อยตรี">ว่าที่ร้อยตรี</option>
                                     <option value="ดร.">ดร.</option>
-                                    <option value="บจก.">บจก.</option>
-                                    <option value="หจก.">หจก.</option>
                                 </select>
                             </div>
                             <div class="col-md-9 p-0">
                                 <label class="col-form-label">ชื่อ :</label>
-                                <input type="text" class="form-control" name="empname" id="empname" value="" required />
+                                <input type="text" class="form-control" name="wkname" id="wkname" value="" required>
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-12">
                             <label class="col-form-label">นามสกุล :</label>
-                            <input type="text" class="form-control" name="lastname" id="lastname" value="" />
+                            <input type="text" class="form-control" name="lastname" id="lastname" value="" required>
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="col-md-6 col-sm-12">
                             <label class="col-form-label">รหัสบัตรประชาชน :</label>
-                            <input type="text" class="form-control" name="idcode" id="idcode" value="" maxlength="20" />
+                            <input type="text" class="form-control" name="idcode" id="idcode" value="">
                         </div>
                         <div class="col-md-6 col-sm-12">
                             <label class="col-form-label">พาสปอร์ต :</label>
-                            <input type="text" class="form-control" name="passport" id="passport" value="" maxlength="20" />
+                            <input type="text" class="form-control" name="passport" id="passport" value="" required>
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="col-md-6 col-sm-12">
                             <label class="col-form-label">วันเกิด :</label>
-                            <input type="date" class="form-control" name="empbirth" id="empbirth"  />
+                            <input type="date" name="wkbirth" id="wkbirth" class="form-control" required>
                         </div>
                         <div class="col-md-6 col-sm-12">
-                            <label class="col-form-label">เบอร์โทรศัพท์ :</label>
-                            <input type="text" class="form-control" name="tel" id="tel" maxlength="20" />
+                            <label class="col-form-label">วันหมดอายุ พาสปอร์ต:</label>
+                            <input type="date" name="passportexpired" id="passportexpired" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-md-6 col-sm-12">
+                            <label class="col-form-label">นายจ้าง :</label>
+                            <select class="form-control select2 select2-hidden-accessible" style="width: 100%; height: 100%;" name="empcode" data-placeholder="เลือกนายจ้าง" data-allow-clear="true">
+                                <!--  -->
+                            </select>
                         </div>
                     </div>
                 </form>
@@ -92,7 +99,7 @@
             <div class="modal-footer">
                 <div class="col text-center">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
-                    <button type="submit" form="frmEditCustomer" class="btn btn-primary">แก้ไข</button>
+                    <button type="submit" form="frmEditWorker" class="btn btn-primary">แก้ไข</button>
                 </div>
             </div>
         </div>

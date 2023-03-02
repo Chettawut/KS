@@ -5,7 +5,7 @@ if (!isset($_SESSION['loggedin'])) {
     exit;
 }
 include_once('../conn.php');
-$TITLE = "นายจ้าง (Employer)";
+$TITLE = "ใบรับงาน (Sales Order)";
 ?>
 <!DOCTYPE html>
 
@@ -22,6 +22,18 @@ $TITLE = "นายจ้าง (Employer)";
     include_once('../import_css.php');
     include_once ROOT_CSS . '/func.php';
     ?>
+
+    <style>
+        .select2-container--default .select2-selection--single {
+            border: 1px solid #ced4da;
+            padding: .46875rem .75rem;
+            height: calc(2.25rem + 2px);
+        }
+        .select2-container--default .select2-selection--single .select2-selection__arrow { 
+            padding: 0.46875rem 0.75rem;
+            height: calc(2.25rem + 2px);
+        }
+    </style>
 </head>
 
 <body class="hold-transition sidebar-mini sidebar-collapse">
@@ -42,7 +54,7 @@ $TITLE = "นายจ้าง (Employer)";
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0"> <i class="nav-icon fas fa-user-tie"></i><?=$TITLE?></h1>
+                            <h1 class="m-0"> <i class="nav-icon fas fa-receipt"></i> <?=$TITLE?></h1>
                         </div>
                         <div class="col-sm-6">
                         </div>
@@ -58,7 +70,8 @@ $TITLE = "นายจ้าง (Employer)";
                                 <div data-role="fieldcontain">
                                     <div class="btn-group" id="btnAddSO" role="group" aria-label="Basic example">
                                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal_add"><i class="fa fa fa-tags" aria-hidden="true"></i>
-                                            เพิ่มนายจ้าง</button>
+                                            เพิ่มใบงาน
+                                        </button>
                                         <button type="button" id="btnRefresh" class="btn btn-primary"><i class="fas fa-sync-alt" aria-hidden="true"></i> Refresh</button>
                                     </div>
                                     <div class="btn-group" id="btnBack" style="display:none;" role="group" aria-label="Basic example">
@@ -74,7 +87,7 @@ $TITLE = "นายจ้าง (Employer)";
                     <br>
                     <div class="row">
                         <div class="col-lg-12 col-12">
-                            <table name="tableEmployer" id="tableEmployer" class="table table-bordered table-striped w-100"></table>
+                            <table name="tableList" id="tableList" class="table table-bordered table-striped w-100"></table>
                         </div>
                     </div>
                 </div>
@@ -84,8 +97,7 @@ $TITLE = "นายจ้าง (Employer)";
 
         <?php include_once('modal/modal_add.php'); ?>
         <?php include_once('modal/modal_edit.php'); ?>
-        <?php include_once('modal/modal_attach_file.php'); ?>
-
+        <?php include_once('modal/modal_attach_file.php'); ?> 
     </div>
 
     <?php

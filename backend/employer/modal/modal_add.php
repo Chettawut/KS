@@ -31,24 +31,29 @@
                         </div>
                         <div class="col-md-6 col-sm-12">
                             <label class="col-form-label">นามสกุล :</label>
-                            <input type="text" class="form-control" name="lastname" id="lastname" value="" required>
+                            <input type="text" class="form-control" name="lastname" id="lastname" value="" />
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="col-md-6 col-sm-12">
                             <label class="col-form-label">รหัสบัตรประชาชน :</label>
-                            <input type="text" class="form-control" name="idcode" id="idcode" value="" required>
+                            <input type="text" class="form-control" name="idcode" id="idcode" value="" maxlength="20" />
                         </div>
                         <div class="col-md-6 col-sm-12">
                             <label class="col-form-label">พาสปอร์ต :</label>
-                            <input type="text" class="form-control" name="passport" id="passport" value="" required>
+                            <input type="text" class="form-control" name="passport" id="passport" value=""  maxlength="20" />
                         </div>
                     </div>
+
                     <div class="form-row">
                         <div class="col-md-6 col-sm-12">
                             <label class="col-form-label">วันเกิด :</label>
-                            <input type="date" class="form-control" name="empbirth" id="empbirth" required>
+                            <input type="date" class="form-control" name="empbirth" id="empbirth" />
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            <label class="col-form-label">เบอร์โทรศัพท์ :</label>
+                            <input type="text" class="form-control" name="tel" id="tel"  maxlength="20" />
                         </div>
                     </div>
                 </form>

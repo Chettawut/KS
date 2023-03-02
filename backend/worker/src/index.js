@@ -21,6 +21,9 @@ const HEADER = [
         title: "พาสปอร์ต",
     },
     {
+        title: "นายจ้าง",
+    },
+    {
         title: "สถานะ",
     },
     {
@@ -111,6 +114,9 @@ function setRowTable(m) {
         m.lastname,
         m.idcode,
         m.passport,
+        (m.empcode) 
+        ? `${m.empname}  ${m.emp_lastname}` 
+        : `<span class="label badge bg-primary label-white middle">ว่าง</span>`,
         `<span class="label badge ${m.status == 'Y' ? 'bg-success' : 'bg-danger'} label-white middle">${m.status == 'Y' ? 'ใช้งาน' : 'ไม่ใช้งาน'}</span>`,
         `<div>
             <button class="btn btn-sm rounded btn-primary btn-edit" data-whatever="${m.wkcode}" data-wkcode="${m.wkcode}">

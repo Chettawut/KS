@@ -9,17 +9,20 @@ if (!isset($_SESSION['loggedin'])) {
     die;
 }
 
+date_default_timezone_set("Asia/Bangkok");
+
 $path = dirname(__FILE__, 3);
 $pathUpload = "//uploads//";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    extract($_POST, EXTR_OVERWRITE, "_"); 
+    extract($_POST, EXTR_OVERWRITE, "_");
 
     $FILE_REQUIRED = array("application/pdf", "image/jpg", "image/png", "image/jpeg");
 
-    $sql = "select * from employer where idcode = '$idcode' and empcode != '$empcode' ";
+    $sql = "select * from worker where idcode = '$idcode' and wkcode != '$wkcode' ";
     $query = mysqli_query($conn, $sql);
     $res = $query->fetch_assoc();
+
     if (!empty($res["idcode"])) {
         mysqli_close($conn);
 
@@ -28,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die();
     }
 
-    $sql = "select * from employer where passport = '$passport' and empcode != '$empcode' ";
+    $sql = "select * from worker where passport = '$passport' and wkcode != '$wkcode' ";
     $query = mysqli_query($conn, $sql);
     $res = $query->fetch_assoc();
     if (!empty($res["passport"])) {
@@ -39,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die();
     }
 
-    $pathDocument = $empcode . "//";
+    $pathDocument = $wkcode . "//";
     $filepath = $path . $pathUpload . $pathDocument;
 
     if (!file_exists($path . $pathUpload)) {
@@ -54,12 +57,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $file_deleted = json_decode($fileDelete, true);
         if (!empty($file_deleted)) {
             foreach ($file_deleted as $i => $v) {
-                $c = $v["code"]; 
+                $c = $v["code"];
                 $p = $v["url"];
                 if (file_exists($path .  $p)) {
                     unlink($path . $p);
                 }
-                
+
                 $sql  = "DELETE FROM attachment WHERE code = ?";
                 $stmt = $conn->prepare($sql); // prepare
                 $stmt->bind_param('s', $c); // bind array at once
@@ -73,28 +76,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $file_code = $v["code"];
                 $file_attname = $v["attname"];
                 $file_name = $v["file_name"];
-                
+
                 $file_oldName = $v["fname"];
-                $file_url = $v["url"];                 
-                if(!isset($file_name) && !empty($_FILES["file$file_code"])){
-                    $file_attach = $_FILES["file$file_code"]; 
+                $file_url = $v["url"];
+                if (!isset($file_name) && !empty($_FILES["file$file_code"])) {
+
+                    $file_attach = $_FILES["file$file_code"];
                     $file_temp = $file_attach["tmp_name"];
                     $file_name = $file_attach["name"];
                     $file_type = $file_attach["type"];
                     $ext = pathinfo($file_name, PATHINFO_EXTENSION);
 
-                    if( !in_array($file_type, $FILE_REQUIRED) ){
+                    if (!in_array($file_type, $FILE_REQUIRED)) {
                         throw new Exception("File attach incorrect.");
                         die;
-                    } 
+                    }
 
                     if (file_exists($path . $file_url)) unlink($path . $file_url);
-                    
-                    $file_url = $pathUpload . $empcode . "//" . $file_oldName . '.'. $ext;
+
+                    $file_url = $pathUpload . $wkcode . "//" . $file_oldName . '.' . $ext;
                     if (!move_uploaded_file($file_temp, $path . $file_url)) {
                         throw new Exception("File exists.");
                         exit;
-                    }                    
+                    }
                 }
                 $sql = "UPDATE attachment SET attname = ?, url = ?  WHERE code = ?"; // sql 
                 $stmt = $conn->prepare($sql); // prepare
@@ -105,8 +109,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $document = array();
         if (!empty($_FILES["file"])) {
-            $file = $_FILES["file"];  
-            $sql = "select max(attno) m from attachment where percode = '$empcode' ";
+            $file = $_FILES["file"];
+            $sql = "select max(attno) m from attachment where percode = '$wkcode' ";
             $query = mysqli_query($conn, $sql);
             $res = $query->fetch_assoc();
             $max_attno = $res ? (int)($res["m"]) + 1 : 1;
@@ -116,12 +120,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $f = $file["name"][$i];
                 $t = $file["type"][$i];
                 $ext = pathinfo($f, PATHINFO_EXTENSION);
-                $file_name = sprintf("$empcode-%02s.$ext", $i + $max_attno);
+                $file_name = sprintf("$wkcode-%02s.$ext", $i + $max_attno);
 
-                if( !in_array($t, $FILE_REQUIRED) ){
+                if (!in_array($t, $FILE_REQUIRED)) {
                     throw new Exception("File attach incorrect.");
                     die;
-                } 
+                }
+
                 //if (file_exists($filepath . $file_name)) continue;
 
                 if (!move_uploaded_file($file_temp, $filepath . $file_name)) {
@@ -133,38 +138,66 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 array_push($document, array("url" => $pathUpload . $pathDocument . $file_name, "attname" => $att_name, "attno" => $i + $max_attno));
             }
         }
-        //var_dump($document);
-        ///throw new Exception("error test");
-        // exit;
-        $sql  = "UPDATE employer SET empname=?,lastname=?,titlename=?,idcode=?,empbirth=?,passport=?, tel=? where empcode = ?";
+        // var_dump($passportexpired);
+        // throw new Exception("error test");
+        // die;
+        $sql  = "UPDATE worker SET wkname=?,lastname=?,titlename=?,idcode=?,wkbirth=?,passport=?,passportexpired=? where wkcode = ?";
         $stmt = $conn->prepare($sql); // prepare
-        $data = [$empname, $lastname, $titlename, $idcode, $empbirth, $passport, $tel, $empcode];
+        $data = [$wkname, $lastname, $titlename, $idcode, $wkbirth, $passport, $passportexpired, $wkcode];
         $stmt->bind_param(str_repeat('s', count($data)), ...$data); // bind array at once
         if (!$stmt->execute()) throw new Exception("Update data error.");
+        // var_dump($data);
+        // throw new Exception("error test");
+        // die;
+        if (!empty($empcode)) {
+            $sql = "SELECT code, empcode FROM employment WHERE wkcode = ? AND status = 'Y'";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param('s', $wkcode);
+            if (!$stmt->execute()) throw new Exception("Update data error.");
+
+            $stmtResult = $stmt->get_result();
+            $employmentExists = $stmtResult->fetch_assoc();
+            // var_dump($employmentExists);
+            // throw new Exception("Test value");
+            // die;
+            if (!empty($employmentExists["code"]) && $employmentExists["empcode"] != $empcode) {
+                $sql  = "UPDATE employment SET status = 'N' where code = ?";
+                $stmt = $conn->prepare($sql);
+                $employment_code = $employmentExists["code"];
+                $stmt->bind_param('i', $employment_code); // bind array at once
+                if (!$stmt->execute()) throw new Exception("Update data error.");
+            }
+
+            if (($employmentExists["empcode"] ?? "") != $empcode) {
+                $sql = "INSERT INTO employment(empcode, wkcode, employdate, employtime, status) VALUES (?, ?, ?, ?, 'Y')";
+                $data = [$empcode, $wkcode, date("Y-m-d"), date("H:i:s")];
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param(str_repeat('s', count($data)), ...$data);
+                if (!$stmt->execute()) throw new mysqli_sql_exception("Insert data error.");
+            }
+        }
+
 
         foreach ($document as $i => $v) {
-            $percode = $empcode;
+            $percode = $wkcode;
             extract($v);
             $sql = "INSERT INTO attachment(percode,attno,attname,url) VALUES (?,?,?,?)";
             $stmt = $conn->prepare($sql); // prepare
-            $data = [$empcode, $v["attno"], $v["attname"], $v["url"]];
+            $data = [$wkcode, $v["attno"], $v["attname"], $v["url"]];
             $stmt->bind_param('siss', ...$data); // bind array at once
             if (!$stmt->execute()) throw new Exception("Update data error.");
-            //echo $sql;
-            //if($result) throw new Exception("Statement query error.");
         }
         $conn->commit();
         mysqli_close($conn);
 
-        header('Status: 200');
-        echo json_encode(array('status' => '1', 'message' => "แก้ไข $empname $lastname สำเร็จ"));
+        http_response_code(200);
+        echo json_encode(array('status' => '1', 'message' => "แก้ไข $wkname $lastname สำเร็จ"));
     } catch (Exception $exception) {
         $conn->rollback();
         mysqli_close($conn);
 
         http_response_code(400);
         echo json_encode(array('status' => '0', 'message' => 'Error insert data!'));
-        die;
         //throw $exception;
     }
 } else {
