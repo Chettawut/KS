@@ -50,7 +50,7 @@ $TITLE = "ลูกจ้าง (Worker)";
 
         <div class="content-wrapper">
 
-            <div class="content-header">
+            <section class="content-header">
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
@@ -60,7 +60,7 @@ $TITLE = "ลูกจ้าง (Worker)";
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
             <section class="content">
                 <div class="container-fluid">

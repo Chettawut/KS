@@ -1,7 +1,9 @@
 <?php
-define('ROOT_JS',str_replace("\\",'/',dirname(__FILE__)));
-define('PATH_JS', ROOT_JS == $_SERVER['DOCUMENT_ROOT']
-    ?'' :substr(ROOT_JS,strlen($_SERVER['DOCUMENT_ROOT']))
+define('ROOT_JS', str_replace("\\", '/', dirname(__FILE__)));
+define(
+    'PATH_JS',
+    ROOT_JS == $_SERVER['DOCUMENT_ROOT']
+        ? '' : substr(ROOT_JS, strlen($_SERVER['DOCUMENT_ROOT']))
 );
 ?>
 
@@ -11,7 +13,7 @@ define('PATH_JS', ROOT_JS == $_SERVER['DOCUMENT_ROOT']
 <script src="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/jquery-ui/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
-$.widget.bridge('uibutton', $.ui.button)
+    $.widget.bridge('uibutton', $.ui.button)
 </script>
 <!-- Bootstrap 4 -->
 <script src="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -28,8 +30,7 @@ $.widget.bridge('uibutton', $.ui.button)
 <script src="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/moment/moment.min.js"></script>
 <script src="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/daterangepicker/daterangepicker.js"></script>
 <!-- Tempusdominus Bootstrap 4 -->
-<script
-    src="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js">
+<script src="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js">
 </script>
 <!-- Summernote -->
 <script src="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/summernote/summernote-bs4.min.js"></script>
@@ -52,16 +53,21 @@ $.widget.bridge('uibutton', $.ui.button)
 <script src="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <script src="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/sweetalert2/sweetalert2.min.js"></script>
-<script src="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/select2/js/select2.full.min.js"></script> 
+<script src="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/select2/js/select2.full.min.js"></script>
+<script src="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/jquery-validation/additional-methods.min.js"></script>
+<script src="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.js"></script>
+<script src="<?php echo PATH; ?>/addon/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+<!-- <script src="<?php echo PATH; ?>/addon/bootstrap-select/dist/js/i18n/defaults-*.min.js"></script> -->
 <!-- <script src="AdminLTE-3.2.0/dist/js/demo.js"></script> -->
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <!-- <script src="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/dist/js/pages/dashboard.js"></script> -->
 <script>
-    $( document ).ready(function(){
-        setTimeout( ()=> { 
+    $(document).ready(function() {
+        setTimeout(() => {
             $(".preloader .animation__shake").hide();
             $(".preloader").height("0px");
-            
+
         }, 800);
-    }); 
+    });
 </script>

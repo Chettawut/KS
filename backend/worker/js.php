@@ -189,6 +189,7 @@
         m.find("select[name=empcode]").select2({
             destroy: true,
             data: _employer_option,
+            dropdownParent: m.find("form"),
         }).val(null).trigger('change');
     });
 
@@ -203,6 +204,7 @@
         modal.find("select[name=empcode]").select2({
             destroy: true,
             data: _employer_option,
+            dropdownParent: modal.find("form"),
         }).val(worker['empcode']).trigger('change');
 
 

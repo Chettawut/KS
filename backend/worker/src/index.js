@@ -21,6 +21,9 @@ const HEADER = [
         title: "พาสปอร์ต",
     },
     {
+        title: "เบอร์โทรศัพท์",
+    },
+    {
         title: "นายจ้าง",
     },
     {
@@ -114,6 +117,7 @@ function setRowTable(m) {
         m.lastname,
         m.idcode,
         m.passport,
+        m.tel,
         (m.empcode) 
         ? `${m.empname}  ${m.emp_lastname}` 
         : `<span class="label badge bg-primary label-white middle">ว่าง</span>`,
