@@ -50,7 +50,7 @@ $TITLE = "ใบรับงาน (Sales Order)";
 
         <div class="content-wrapper">
 
-            <div class="content-header">
+            <section class="content-header">
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
@@ -60,7 +60,7 @@ $TITLE = "ใบรับงาน (Sales Order)";
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
             <section class="content">
                 <div class="container-fluid">
@@ -86,7 +86,7 @@ $TITLE = "ใบรับงาน (Sales Order)";
                     </div>
                     <br>
                     <div class="row">
-                        <div class="col-lg-12 col-12">
+                        <div class="col-lg-12 col-12 overflow-auto">
                             <table name="tableList" id="tableList" class="table table-bordered table-striped w-100"></table>
                         </div>
                     </div>
@@ -97,7 +97,7 @@ $TITLE = "ใบรับงาน (Sales Order)";
 
         <?php include_once('modal/modal_add.php'); ?>
         <?php include_once('modal/modal_edit.php'); ?>
-        <?php include_once('modal/modal_attach_file.php'); ?> 
+        <?php include_once('modal/modal_add_multi.php'); ?> 
     </div>
 
     <?php

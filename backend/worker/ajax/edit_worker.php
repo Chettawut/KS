@@ -175,6 +175,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $stmt->bind_param(str_repeat('s', count($data)), ...$data);
                 if (!$stmt->execute()) throw new mysqli_sql_exception("Insert data error.");
             }
+        }else{
+            $sql  = "UPDATE employment SET status = 'N' where wkcode = ?";
+            $stmt = $conn->prepare($sql); 
+            $stmt->bind_param('s', $wkcode); // bind array at once
+            if (!$stmt->execute()) throw new Exception("Update data error.");   
         }
 
 
@@ -188,17 +193,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (!$stmt->execute()) throw new Exception("Update data error.");
         }
         $conn->commit();
-        mysqli_close($conn);
+
 
         http_response_code(200);
         echo json_encode(array('status' => '1', 'message' => "แก้ไข $wkname $lastname สำเร็จ"));
     } catch (Exception $exception) {
-        $conn->rollback();
-        mysqli_close($conn);
+        $conn->rollback(); 
 
         http_response_code(400);
         echo json_encode(array('status' => '0', 'message' => 'Error insert data!'));
         //throw $exception;
+    }
+    finally{
+        mysqli_close($conn);
     }
 } else {
     echo "Incorrect Parameter";

@@ -11,11 +11,11 @@ if (!isset($_SESSION['loggedin'])) {
 
 try {
 	$sql = "
-	select w.*, em.empcode, em.empname, em.lastname as emp_lastname
+	select w.*, em.empcode, em.empname, em.lastname as emp_lastname, em.tel
 	from worker w
 	left outer join
 	(
-		select e.empcode, e.wkcode, e.code, e2.empname, e2.lastname
+		select e.empcode, e.wkcode, e.code, e2.empname, e2.lastname, e2.tel
 		from employment e 
 		inner join employer e2 on e.empcode = e2.empcode
 		where e.status  = 'Y' 

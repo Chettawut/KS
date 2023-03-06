@@ -22,6 +22,15 @@
         color: #0056b3;
         text-decoration: underline !important;
     }
+    
+    .tbox{
+        width: 100%;
+        max-width: 100%;
+        overflow: auto;
+    }
+    .tbox table.table thead tr>th{
+        white-space: nowrap;
+    }
 
  
 </style>
