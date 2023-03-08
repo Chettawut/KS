@@ -36,7 +36,7 @@ $TITLE = "ลูกจ้าง (Worker)";
     </style>
 </head>
 
-<body class="hold-transition sidebar-mini sidebar-collapse">
+<body class="hold-transition sidebar-mini  ">
     <div class="wrapper">
 
         <div class="preloader flex-column justify-content-center align-items-center">
@@ -54,7 +54,7 @@ $TITLE = "ลูกจ้าง (Worker)";
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0"> <i class="nav-icon fas fa-user-friends"></i> <?=$TITLE?></h1>
+                            <h1 class="m-0"> <i class="mr-3 fas fa-user-friends"></i> <?=$TITLE?></h1>
                         </div>
                         <div class="col-sm-6">
                         </div>

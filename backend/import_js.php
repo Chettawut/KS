@@ -2,8 +2,7 @@
 define('ROOT_JS', str_replace("\\", '/', dirname(__FILE__)));
 define(
     'PATH_JS',
-    ROOT_JS == $_SERVER['DOCUMENT_ROOT']
-        ? '' : substr(ROOT_JS, strlen($_SERVER['DOCUMENT_ROOT']))
+    ROOT_JS == $_SERVER['DOCUMENT_ROOT'] ? '' : substr(ROOT_JS, strlen($_SERVER['DOCUMENT_ROOT']))
 );
 ?>
 
@@ -57,17 +56,51 @@ define(
 <script src="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/jquery-validation/jquery.validate.min.js"></script>
 <script src="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/jquery-validation/additional-methods.min.js"></script>
 <script src="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.js"></script>
-<script src="<?php echo PATH; ?>/addon/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
-<!-- <script src="<?php echo PATH; ?>/addon/bootstrap-select/dist/js/i18n/defaults-*.min.js"></script> -->
 <!-- <script src="AdminLTE-3.2.0/dist/js/demo.js"></script> -->
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <!-- <script src="<?php echo PATH; ?>/backend/AdminLTE-3.2.0/dist/js/pages/dashboard.js"></script> -->
+<script src="<?php echo PATH; ?>/addon/bootstrap-select/dist/js/bootstrap-select.js"></script>
+<!-- <script src="<?php echo PATH; ?>/addon/bootstrap-select/dist/js/i18n/defaults-*.min.js"></script> -->
+
 <script>
-    $(document).ready(function() {
+    $(document).ready(function() { 
+        const store = localStorage.getItem('menu'); 
+        const menu = !!store ? JSON.parse(store) : null;
+        if(!!menu){
+            const m = $(`a.main-link[menu-id=${menu.menuId}]`);
+            const s = $(`a[sub-menu-id=${menu.subMenuId}]`);
+            const lt = m.closest("li.nav-item");
+
+            m.addClass("active");
+            s.addClass("active");
+            lt.addClass("menu-open");
+        }
         setTimeout(() => {
             $(".preloader .animation__shake").hide();
             $(".preloader").height("0px");
-
         }, 800);
+    });
+
+    $(document).on("mousedown mouseup click", "a.nav-link", function(){
+        const pAction = $(this).attr("type-id");
+        const menuId = $(this).attr("menu-id");
+        const subMenuId = $(this).attr("sub-menu-id");
+        localStorage.setItem('menu', JSON.stringify({menuId : menuId, subMenuId:subMenuId}));
+        if(!!pAction){
+            const groupId = $(this).attr("type-group-id");
+            const groupName = $(this).attr("type-group-name");
+            const typeId = $(this).attr("type-id");
+            const typeName = $(this).attr("type-name");
+            const stored = {
+                groupId : groupId,
+                groupName : groupName,
+                typeId : typeId,
+                typeName : typeName
+            }
+            localStorage.setItem('acmenu', JSON.stringify(stored));
+            $(this).blur();
+        }else{
+            localStorage.removeItem('acmenu');
+        } 
     });
 </script>

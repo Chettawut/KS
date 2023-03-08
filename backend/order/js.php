@@ -1,9 +1,12 @@
+<script src="<?=PATH?>/addon/thai-bath/thai-bath.js"></script>
 <script src="src/index.js"></script>
 <script type="text/javascript">
     let _employer_option = undefined;
     let _worker_option = undefined;
     let _workerList = undefined;
-    let _orderList = []; 
+    let _tableList = [];
+    let _orderList = [];
+    let _orderListSeleted = []; 
     $(async function() {
         _workerList = await gettingOrder();
         _employer_option = await gettingoptionEmployer();
@@ -274,13 +277,17 @@
 
     $(document).on("hidden.bs.modal", "#modal_add", function() {
         let modal = $(this);
-        $.each(modal.find("[name]"), function(i, e) {
-            console.log(e);
+        $.each(modal.find("[name]"), function(i, e) { 
             $(e).val(null);
         });
         modal.find("select[name=empcode]").empty().select2("destroy");
         modal.find("select[name=wkcode]").empty().select2("destroy");
-        $('.selectpicker').selectpicker('render');
+        $('.selectpicker').selectpicker('refresh');
+        $("#tableDetail tbody").html(`<tr><td colspan="6" align="center" class="bg-secondary-50">ไม่มีรายการ</td></tr>`);
+        $("#tableDetail tfoot").find("td").eq(1).text("0.00".toLocaleString('en-US', {maximumFractionDigits: 5}));  
+        $("#tableDetail tfoot").find("td").eq(3).text(""); 
+        _orderList = [];
+        _orderListSeleted = [];
     });
 
     $(document).on("show.bs.modal", "#modal_edit", async function(e) {
@@ -305,7 +312,7 @@
 
     $(document).on("hidden.bs.modal", ".sub-modal.modal", function() {
         let model = $(this);
-        model.closest("body").addClass("modal-open");
+        model.closest("body").addClass("modal-open").css({"padding-right": "17px"});
     });
 
     $(document).on("show.bs.modal", "#modal-add-multi", function() {
@@ -323,7 +330,7 @@
             infoTextFiltered:'<span class="badge badge-warning">ค้นหาเจอ</span> {0} จาก {1}',
             filterPlaceHolder:"ค้นหารายการ",
             helperSelectNamePostfix:"_listadd",
-        })
+        });
     })
 
     $(document).on("change", "#modalAdd [condi]", function() {
@@ -341,45 +348,68 @@
         $('#form-list-add').submit(); 
     });
 
+    $(document).on("change", "select[name=wkcode]", function(e) {
+        const val = $(this).val(); 
+        _orderListSeleted = val; 
+        $(`#multi-list option`).attr("hidden",false);  
+        if(!!val[0]){ 
+            _orderListSeleted?.forEach( (val,i)=>{ 
+                $(`#multi-list option[value=${val}]`).attr("hidden", _orderListSeleted.includes(val));  
+            });
+        }
+
+        $(`#multi-list`).bootstrapDualListbox('refresh');
+    });
+
     $(document).on("click", "#btn-multi-list-add", function(e) {
         const modal = $(this).closest("div.modal");
         const mulSelect = $("#multi-list").val();
-        $('select[name=wkcode]').val(mulSelect).trigger('change');
+        _orderListSeleted = [...new Set([..._orderListSeleted, ...mulSelect]) ];
+        $('select[name=wkcode]').val(_orderListSeleted).trigger('change');
+        
         $("#multi-list").val(null).bootstrapDualListbox('refresh');
         modal.modal("hide");
     });
 
     function onAddList(){ 
-        const wkcode = $("select[name=wkcode]").val();
+        const wkcode = _orderListSeleted //$("select[name=wkcode]").val();
         const price = parseFloat($("input[name=price]").val()?.replaceAll(',', ''));
         const payment = $("select[name=payment]").val();
         const remark = $("textarea[name=remark]").val();
         $("#tableDetail tbody").empty();
         let total = 0;
-        wkcode?.forEach( (val,i)=>{
-            const d = (_worker_option.filter( f => f.id == val))[0];
+        let t = wkcode.map( m => ({
+            wkcode:m,
+            price:price,
+            payment:payment,
+            remark:remark,
+        }));
+
+        _tableList = [..._tableList, ...t];
+        _tableList?.forEach( (val,i)=>{
+            const d = (_worker_option.filter( f => f.id == val.wkcode))[0];
             let row = `
             <td>${+(i) + 1}</td>
             <td>${d.text}</td>
-            <td align="right"><a class="ed-link" href="#" num>${price.toLocaleString('en-US', {maximumFractionDigits: 5})}</a></td>
-            <td align="center"><a class="ed-link" href="#" sec>${payment}</a></td>
-            <td align="center"><a class="ed-link" href="#" are>${remark || "-"}</a></td>
+            <td align="right"><a class="ed-link" href="#" num>${val.price.toLocaleString('en-US', {maximumFractionDigits: 5})}</a></td>
+            <td align="center"><a class="ed-link" href="#" sec>${val.payment}</a></td>
+            <td align="center"><a class="ed-link" href="#" are>${val.remark || "-"}</a></td>
             <td align="center">
                 <button class="btn btn-sm btn-danger">
                     <i class="fas fa-trash-alt"></i>
                 </button>
             </td>
             `
-            $("#tableDetail tbody").append(`<tr row-id="${d.id}">${row}</tr>`);
-            _orderList.push({
-                wkcode : d.id,
-                price : price,
-                payment : payment,
-                remark : remark,
-            });
-            total += price;
-            $("#tableDetail tfoot").find("td").eq(1).text(total.toLocaleString('en-US', {maximumFractionDigits: 5}));
+            $("#tableDetail tbody").append(`<tr row-id="${i}">${row}</tr>`);
+
+            total += val.price;
+            $("#tableDetail tfoot").find("td").eq(1).text(total.toLocaleString('en-US', {maximumFractionDigits: 5}));  
+            $("#tableDetail tfoot").find("td").eq(3).text(ArabicNumberToText(total));  
         });
 
+        $("select[name=wkcode] option:selected").remove().trigger('change');
+        $("input[name=price]").val(null);
+        $("select[name=payment]").val(null).selectpicker('refresh');;
+        $("textarea[name=remark]").val(null);
     }
 </script>

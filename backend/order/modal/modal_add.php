@@ -22,7 +22,7 @@
                             <div class="form-group">
                                 <label class="col-form-label">ประเภทใบงาน<strong class="text-danger">*</strong> :</label>
 
-                                <select class="custom-select form-control selectpicker" name="sotype" id="sotype" placeholder="เลือกประเภทใบงาน" condi>
+                                <select class="form-control selectpicker" name="sotype" id="sotype" placeholder="เลือกประเภทใบงาน"  data-container="#modalAdd" condi>
                                     <option value="">เลือกประเภทใบงาน</option>
                                     <option value="รายงานตัว90วัน">รายงานตัว90วัน</option>
                                     <option value="เปลี่ยนนายจ้าง">เปลี่ยนนายจ้าง</option>
@@ -128,23 +128,23 @@
                                         <tr>
                                             <th style="width: 80px;">ลำดับ</th>
                                             <th>รายการ(ลูกจ้าง)</th>
-                                            <th style="width: 100px; text-align: end;">ราคา</th>
-                                            <th style="width: 120px; text-align: center;">การชำระเงิน</th>
+                                            <th style="width: 140px; text-align: end;">ราคา</th>
+                                            <th style="width: 140px; text-align: center;">การชำระเงิน</th>
                                             <th style="text-align: center;">หมายเหตุ</th>
                                             <th style="width: 60px; text-align: center;"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td colspan="5" align="center" class="bg-secondary-50">ไม่มีข้อมูลไฟล์</td>
+                                            <td colspan="6" align="center" class="bg-secondary-50">ไม่มีรายการ</td>
                                         </tr>
                                     </tbody>
                                     <tfoot class="sticky-bottom table-defalut bg-secondary">
                                         <tr>
-                                            <td colspan="2">รวมเงิน (Total)</td>
-                                            <td align="right">0.00</td>
-                                            <td align="center">บาท(หน่วย)</td>
-                                            <td align="center" colspan="2"></td>
+                                            <td colspan="2" class="border-left-0 border-right-0" >รวมเงิน (Total)</td>
+                                            <td class="border-left-0 border-right-0 text-right" >0.00</td>
+                                            <td class="border-left-0 border-right-0 text-center" >บาท(หน่วย)</td>
+                                            <td class="text-center" colspan="2"></td>
                                         </tr>
                                     </tfoot>
                                 </table>                                

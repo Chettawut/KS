@@ -27,16 +27,16 @@ $TITLE = "ใบรับงาน (Sales Order)";
         .select2-container--default .select2-selection--single {
             border: 1px solid #ced4da;
             padding: .46875rem .75rem;
-            height: calc(2.25rem + 2px);
+            /* height: calc(2.25rem + 2px); */
         }
         .select2-container--default .select2-selection--single .select2-selection__arrow { 
             padding: 0.46875rem 0.75rem;
-            height: calc(2.25rem + 2px);
+            /* height: calc(2.25rem + 2px); */
         }
     </style>
 </head>
 
-<body class="hold-transition sidebar-mini sidebar-collapse">
+<body class="hold-transition sidebar-mini"> <!--   -->
     <div class="wrapper">
 
         <div class="preloader flex-column justify-content-center align-items-center">
@@ -54,7 +54,10 @@ $TITLE = "ใบรับงาน (Sales Order)";
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0"> <i class="nav-icon fas fa-receipt"></i> <?=$TITLE?></h1>
+                            <h1 class="m-0"> 
+                                <i class="mr-3 fas fa-receipt"></i> 
+                                <span class="title-text d-inline-flex align-items-center"><?=$TITLE?></span>
+                            </h1>
                         </div>
                         <div class="col-sm-6">
                         </div>
@@ -100,12 +103,28 @@ $TITLE = "ใบรับงาน (Sales Order)";
         <?php include_once('modal/modal_add_multi.php'); ?> 
     </div>
 
-    <?php
-    include_once ROOT_CSS . '/import_js.php';
+    <?php include_once ROOT_CSS . '/import_js.php'; ?>  
+
+    <script type="text/javascript">
+        $(function() {
+            let s = localStorage.getItem("acmenu");
+            var PRODUCT_STORED = !!s ? JSON.parse(s) : undefined;
+            var PRODUCT_GROUP_ID = PRODUCT_STORED["groupId"];
+            var PRODUCT_GROUP_NAME = PRODUCT_STORED["groupName"];
+            var PRODUCT_ID = PRODUCT_STORED["typeId"];
+            var PRODUCT_NAME = PRODUCT_STORED["typeName"]; 
+
+            $("title").text(`ใบรับงาน [ ${PRODUCT_NAME} ]`);
+            $(".title-text").html(`ใบรับงาน - ${PRODUCT_GROUP_NAME}<small class="ml-3" style="font-weight: 600; font-size: 1rem; font-style: italic;" >[ ${PRODUCT_NAME} ]</small>`);
+        });        
+    </script>    
 
 
-    include_once('js.php');
-    ?>
+    <?php include_once('js.php'); ?>  
+    
+    
+
+
 
 </body>
 
