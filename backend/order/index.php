@@ -106,17 +106,18 @@ $TITLE = "ใบรับงาน (Sales Order)";
     <?php include_once ROOT_CSS . '/import_js.php'; ?>  
 
     <script type="text/javascript">
-        $(function() {
+        //$(function() {
             let s = localStorage.getItem("acmenu");
             var PRODUCT_STORED = !!s ? JSON.parse(s) : undefined;
-            var PRODUCT_GROUP_ID = PRODUCT_STORED["groupId"];
+            var PRODUCT_GROUP_ID = parseInt( PRODUCT_STORED["groupId"] );
             var PRODUCT_GROUP_NAME = PRODUCT_STORED["groupName"];
-            var PRODUCT_ID = PRODUCT_STORED["typeId"];
-            var PRODUCT_NAME = PRODUCT_STORED["typeName"]; 
+            //var PRODUCT_ID = PRODUCT_STORED["typeId"];
+            //var PRODUCT_NAME = PRODUCT_STORED["typeName"]; 
 
-            $("title").text(`ใบรับงาน [ ${PRODUCT_NAME} ]`);
-            $(".title-text").html(`ใบรับงาน - ${PRODUCT_GROUP_NAME}<small class="ml-3" style="font-weight: 600; font-size: 1rem; font-style: italic;" >[ ${PRODUCT_NAME} ]</small>`);
-        });        
+            $("title").text(`ใบรับงาน [ ${PRODUCT_GROUP_NAME} ]`);
+            $(".title-text").html(`สร้างใบรับงาน - ${PRODUCT_GROUP_NAME}`);
+            // $(".title-text").html(`ใบรับงาน - ${PRODUCT_GROUP_NAME}<small class="ml-3" style="font-weight: 600; font-size: 1rem; font-style: italic;" >[ ${PRODUCT_NAME} ]</small>`);
+        //});        
     </script>    
 
 

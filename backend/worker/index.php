@@ -70,7 +70,7 @@ $TITLE = "ลูกจ้าง (Worker)";
                                 <div data-role="fieldcontain">
                                     <div class="btn-group" id="btnAddSO" role="group" aria-label="Basic example">
                                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal_add"><i class="fa fa fa-tags" aria-hidden="true"></i>
-                                            เพิ่มลูก</button>
+                                            เพิ่มลูกจ้าง</button>
                                         <button type="button" id="btnRefresh" class="btn btn-primary"><i class="fas fa-sync-alt" aria-hidden="true"></i> Refresh</button>
                                     </div>
                                     <div class="btn-group" id="btnBack" style="display:none;" role="group" aria-label="Basic example">

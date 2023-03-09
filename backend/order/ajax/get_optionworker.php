@@ -16,7 +16,7 @@
 			{
 				case "GetByEmployer" :
 					
-					$sql = "select w.wkcode id, concat(w.wkname, ' ', w.lastname) text 
+					$sql = "select w.wkcode id, concat(w.wkname, ' ', w.lastname, ' / ', w.passport) text 
 					from employment e
 						inner join employer e2 on e2.empcode = e.empcode
 						inner join worker w on w.wkcode  = e.wkcode

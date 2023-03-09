@@ -82,20 +82,20 @@ define(
     });
 
     $(document).on("mousedown mouseup click", "a.nav-link", function(){
-        const pAction = $(this).attr("type-id");
+        const pAction = $(this).attr("group-id");
         const menuId = $(this).attr("menu-id");
         const subMenuId = $(this).attr("sub-menu-id");
         localStorage.setItem('menu', JSON.stringify({menuId : menuId, subMenuId:subMenuId}));
         if(!!pAction){
-            const groupId = $(this).attr("type-group-id");
-            const groupName = $(this).attr("type-group-name");
-            const typeId = $(this).attr("type-id");
-            const typeName = $(this).attr("type-name");
+            const groupId = $(this).attr("group-id");
+            const groupName = $(this).attr("group-name");
+            //const typeId = $(this).attr("type-id");
+            //const typeName = $(this).attr("type-name");
             const stored = {
                 groupId : groupId,
                 groupName : groupName,
-                typeId : typeId,
-                typeName : typeName
+                //typeId : typeId,
+                //typeName : typeName
             }
             localStorage.setItem('acmenu', JSON.stringify(stored));
             $(this).blur();

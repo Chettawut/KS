@@ -1,8 +1,8 @@
-<div class="modal fade bd-example-modal-xl" tabindex="-1" id="modal_add" role="dialog" data-backdrop="static" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+<div class="modal fade bd-example-modal-xl pl-0" tabindex="-1" id="modal_add" role="dialog" data-backdrop="static" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content w3-flat-turquoise">
             <div class="modal-header bg-gradient-secondary">
-                <h5 class="modal-title">เพิ่มลูกจ้าง</h5>
+                <h5 class="modal-title">เพิ่มใบรับงาน</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -20,19 +20,9 @@
                         </div>
                         <div class="col-md-6 col-sm-12">
                             <div class="form-group">
-                                <label class="col-form-label">ประเภทใบงาน<strong class="text-danger">*</strong> :</label>
+                                <label class="col-form-label">ประเภทใบงานรับงาน<strong class="text-danger">*</strong> :</label>
 
-                                <select class="form-control selectpicker" name="sotype" id="sotype" placeholder="เลือกประเภทใบงาน"  data-container="#modalAdd" condi>
-                                    <option value="">เลือกประเภทใบงาน</option>
-                                    <option value="รายงานตัว90วัน">รายงานตัว90วัน</option>
-                                    <option value="เปลี่ยนนายจ้าง">เปลี่ยนนายจ้าง</option>
-                                    <option value="ต่อวีซ่า">ต่อวีซ่า</option>
-                                    <option value="ทำพาสปอร์ต">ทำพาสปอร์ต</option>
-                                    <option value="นำเข้าแรงงานMOU">นำเข้าแรงงานMOU</option>
-                                    <option value="ผลิตบัตรชมพู">ผลิตบัตรชมพู</option>
-                                    <option value="ต่อใบอนุญาติทำงาน">ต่อใบอนุญาติทำงาน</option>
-                                    <option value="ขึ้นทะเบียนใหม">ขึ้นทะเบียนใหม่</option>
-                                </select>
+                                <input type="text" class="form-control" id="productgroupname" value="" disabled="true">
                             </div>
                         </div>
                     </div>
@@ -61,21 +51,27 @@
                                 <div class="form-row">
                                     <div class="col-md-6 col-sm-12">
                                         <div class="form-group">
-                                            <label class="col-form-label">เลือกรายการ(ลูกจ้าง)<strong class="text-danger">*</strong> :</label>
-                                            <select class="form-control select2 select2-hidden-accessible" multiple="multiple" style="width: 100%; height: 100%;" name="wkcode" data-placeholder="เลือกลูกจ้าง" data-allow-clear="true" required>
-                                                <!--  -->
-                                            </select>
+                                            <label class="col-form-label">
+                                                เลือกรายการ(ลูกจ้าง)
+                                                <strong class="text-danger">*</strong> :
+                                            </label>
+                                            <div class="d-flex align-items-start">
+                                                <select class="form-control select2 select2-hidden-accessible" multiple="multiple" style="width: 100%; height: 100%;" name="wkcode" data-placeholder="เลือกลูกจ้าง" data-allow-clear="true" required>
+                                                    <!--  -->
+                                                </select>
+                                                <button class="btn ml-1 mt-2 btn-xs btn-success text-nowrap" type="button" data-toggle="modal" data-target="#modal-add-multi">
+                                                    <i class="far fa-list-alt mr-2"></i>
+                                                    <span>เลือกแบบหลายรายการ</span>
+                                                </button>                                                
+                                            </div> 
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-sm-12">
                                         <div class="form-group">
-                                            <label class="col-form-label">&nbsp;<strong class="text-danger"></strong></label>
-                                            <div class="w-100 button-group d-flex align-items-end">
-                                                <button class="btn btn-success mb-3" type="button" data-toggle="modal" data-target="#modal-add-multi">
-                                                    <i class="far fa-list-alt mr-2"></i>
-                                                    <span>เลือกแบบหลายรายการ</span>
-                                                </button>
-                                            </div>
+                                            <label class="col-form-label">ประเภทรายการ<strong class="text-danger">*</strong> :</label>
+                                            <select class="form-control selectpicker" name="productid" id="productid" title="เลือกประเภทรายการ">
+                                                <!--  -->
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -89,8 +85,7 @@
                                     <div class="col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label class="col-form-label" for="payment">การชำระเงิน<strong class="text-danger">*</strong> :</label>
-                                            <select class="custom-select form-control selectpicker" name="payment" id="payment">
-                                                <option value="">เลือกการชำระเงิน</option>
+                                            <select class="form-control selectpicker" name="payment" id="payment" title="เลือกประเภทรายการ">
                                                 <option value="เงินสด">เงินสด</option>
                                                 <option value="โอนชำระ">โอนชำระ</option>
                                             </select>
@@ -128,6 +123,7 @@
                                         <tr>
                                             <th style="width: 80px;">ลำดับ</th>
                                             <th>รายการ(ลูกจ้าง)</th>
+                                            <th>ประเภทรายการ</th>
                                             <th style="width: 140px; text-align: end;">ราคา</th>
                                             <th style="width: 140px; text-align: center;">การชำระเงิน</th>
                                             <th style="text-align: center;">หมายเหตุ</th>
@@ -136,19 +132,19 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td colspan="6" align="center" class="bg-secondary-50">ไม่มีรายการ</td>
+                                            <td colspan="7" align="center" class="bg-secondary-50">ไม่มีรายการ</td>
                                         </tr>
                                     </tbody>
                                     <tfoot class="sticky-bottom table-defalut bg-secondary">
                                         <tr>
-                                            <td colspan="2" class="border-left-0 border-right-0" >รวมเงิน (Total)</td>
-                                            <td class="border-left-0 border-right-0 text-right" >0.00</td>
-                                            <td class="border-left-0 border-right-0 text-center" >บาท(หน่วย)</td>
+                                            <td colspan="3" class="border-left-0 border-right-0">รวมเงิน (Total)</td>
+                                            <td class="border-left-0 border-right-0 text-right">0.00</td>
+                                            <td class="border-left-0 border-right-0 text-center">บาท(หน่วย)</td>
                                             <td class="text-center" colspan="2"></td>
                                         </tr>
                                     </tfoot>
-                                </table>                                
-                            </div> 
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

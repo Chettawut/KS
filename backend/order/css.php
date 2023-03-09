@@ -1,15 +1,15 @@
 <style>
-    #tableWorker>thead>tr>th {
+    #tableList>thead>tr>th {
         background-color: #c1c8d7;
     }
 
-    #tableWorker>thead>tr>th:nth-last-child(2),
-    #tableWorker>tbody>tr>td:nth-last-child(2) {
+    #tableList>thead>tr>th:nth-last-child(2),
+    #tableList>tbody>tr>td:nth-last-child(2) {
         text-align: center;
     }
 
-    #tableWorker>thead>tr>th:last-child,
-    #tableWorker>tbody>tr>td:last-child {
+    #tableList>thead>tr>th:last-child,
+    #tableList>tbody>tr>td:last-child {
         text-align: center;
     }
 

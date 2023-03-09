@@ -102,19 +102,19 @@ try {
                 <?php foreach ($PRODUCT_MENU as $menu) { ?>
                     <li class="nav-item">
                         <a 
-                        href="javascript:void(0);" 
+                        href="<?php echo PATH; ?>/backend/order?g=<?= $menu['id'] ?>" 
                         class="nav-link main-link" 
                         group-id="<?= $menu["id"] ?>" 
                         group-name="<?= $menu["group"] ?>" 
                         menu-id="order-<?= $menu["id"] ?>"
                         >
                             <?= $MENU_ICON[$menu["group"]] ?>
-                            <p>
+                            <!-- <p> -->
                                 <?= $menu["group"] ?>
-                                <i class="right fas fa-angle-left"></i>
-                            </p>
+                                <!-- <i class="right fas fa-angle-left"></i> -->
+                            <!-- </p> -->
                         </a>
-                        <ul class="nav nav-treeview">
+                        <!-- <ul class="nav nav-treeview d-none">
                             <?php foreach ($menu["lists"] as $sub) { ?>
                                 <li class="nav-item">
                                     <a 
@@ -132,7 +132,7 @@ try {
                                     </a>
                                 </li>
                             <?php } ?>
-                        </ul>
+                        </ul> -->
                     </li>
                 <?php } ?>
 

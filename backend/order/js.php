@@ -1,16 +1,27 @@
-<script src="<?=PATH?>/addon/thai-bath/thai-bath.js"></script>
+<script src="<?= PATH ?>/addon/thai-bath/thai-bath.js"></script>
 <script src="src/index.js"></script>
 <script type="text/javascript">
     let _employer_option = undefined;
     let _worker_option = undefined;
-    let _workerList = undefined;
+    let _product_list_option = undefined;
     let _tableList = [];
     let _orderList = [];
-    let _orderListSeleted = []; 
+    let _orderListSeleted = [];
     $(async function() {
-        _workerList = await gettingOrder();
-        _employer_option = await gettingoptionEmployer();
-        let dataArray = _workerList.map(m => setRowTable(m));
+        _orderList = await gettingOrder();
+
+        gettingOptionEmployer().then((result) => {
+            _employer_option = result
+        });
+
+        gettingOptionProductList().then((result) => {
+            _product_list_option = result
+            _product_list_option?.forEach((val, i) => {
+                $(`#productid`).append(`<option value=${val.id}>${val.text}</option>`);
+            });
+        });
+
+        let dataArray = _orderList.map(m => setRowTable(m));
         let ignoreSorting = HEADER.map((m, i) => (["ตัวเลือก", "สถานะ"].includes(m.title) ? i : -1)).filter(f => f != -1);
         let configTb = {
             lengthMenu: [
@@ -33,54 +44,7 @@
         window.location.reload();
     });
 
-    //เพิ่มนายจ้าง
-    // $("#modalAdd").submit(async function(e) {
-    //     e.preventDefault();
-    //     let form = $(this).serializeArray();
-    //     console.log(form);
-    //     return;
-    //     let formData = new FormData();
-    //     if (_fileList.length > 0) {
-    //         let _i = 0;
-    //         let _f = _fileList;
-    //         for (let elm of _f) {
-    //             _fileFormData.push({
-    //                 attname: elm.attname,
-    //                 file_name: elm.file['name'],
-    //                 attno: ++_i
-    //             });
-    //             formData.append("file[]", elm.file);
-    //             //console.log("attName => ", inp, "file  Name => ", file.name);
-    //         }
-    //         formData.append("fileData", JSON.stringify(_fileFormData));
-    //     }
 
-    //     for (let f of form) {
-    //         formData.append(f.name, f.value);
-    //     }
-
-    //     $.ajax({
-    //         type: "POST",
-    //         url: "ajax/add_worker.php",
-    //         processData: false,
-    //         contentType: false,
-    //         data: formData,
-    //         success: async function(result) {
-    //             if (result.status == 1) // Success
-    //             {
-    //                 await Swal.fire('สำเร็จ', result.message, 'success');
-    //                 window.location.reload();
-    //                 // console.log(result.message);
-    //             } else {
-    //                 Swal.fire('เกิดข้อผิดพลาด', "เกิดปัญหาในหารเพิ่มข้อมูลกรุณาลองใหม่อีกครั้ง", 'error')
-    //             }
-    //         },
-    //         error: function(error) {
-    //             console.log(error.responseText);
-    //             Swal.fire('เกิดข้อผิดพลาด', error.responseText, 'error')
-    //         }
-    //     });
-    // });
 
     //แก้ไขลูกจ้าง
     $("#frmEditWorker").submit(async function(e) {
@@ -189,6 +153,8 @@
 
     $(document).on("show.bs.modal", "#modal_add", function() {
         const m = $(this);
+        m.find(".modal-title").text(`เพิ่มใบรับงานสำหรับประเภท ${PRODUCT_GROUP_NAME}`)
+        m.find("#productgroupname").val(`${PRODUCT_GROUP_NAME}`);
         m.find("select[name=empcode]").select2({
             destroy: true,
             data: _employer_option,
@@ -201,7 +167,8 @@
             dropdownParent: $("#addList")
         }).val(null).trigger('change');
 
-        m.find(".selectpicker").selectpicker('setStyle', 'select-custom');
+
+        m.find(".selectpicker").selectpicker('setStyle', 'select-custom').selectpicker('refresh');
 
         let obj = {
             errorElement: 'span',
@@ -226,20 +193,14 @@
                 empcode: {
                     required: true,
                 },
-                sotype: {
-                    required: true,
-                },
             },
             messages: {
                 empcode: {
                     required: "กรุณาเลือก ลูกค้า(นายจ้าง)",
                 },
-                sotype: {
-                    required: "กรุณาเลือก ประเภทใบงาน",
-                },
             },
             submitHandler: function() {
-                alert("Submitted!")
+                onAddOrder();
             }
         });
 
@@ -256,6 +217,9 @@
                 payment: {
                     required: true,
                 },
+                productid: {
+                    required: true
+                }
             },
             messages: {
                 wkcode: {
@@ -268,6 +232,9 @@
                 payment: {
                     required: "กรุณาเลือก การชำระเงิน",
                 },
+                payment: {
+                    required: "กรุณาเลือก ประเภทรายการ",
+                },
             },
             submitHandler: function() {
                 onAddList();
@@ -277,23 +244,21 @@
 
     $(document).on("hidden.bs.modal", "#modal_add", function() {
         let modal = $(this);
-        $.each(modal.find("[name]"), function(i, e) { 
+        $.each(modal.find("[name]"), function(i, e) {
             $(e).val(null);
         });
-        modal.find("select[name=empcode]").empty().select2("destroy");
-        modal.find("select[name=wkcode]").empty().select2("destroy");
-        $('.selectpicker').selectpicker('refresh');
-        $("#tableDetail tbody").html(`<tr><td colspan="6" align="center" class="bg-secondary-50">ไม่มีรายการ</td></tr>`);
-        $("#tableDetail tfoot").find("td").eq(1).text("0.00".toLocaleString('en-US', {maximumFractionDigits: 5}));  
-        $("#tableDetail tfoot").find("td").eq(3).text(""); 
-        _orderList = [];
-        _orderListSeleted = [];
+
+        modal.find(".modal-title").text(`เพิ่มใบรับงานสำหรับประเภท ${PRODUCT_GROUP_NAME}`);
+        modal.find("select.select2").empty().select2("destroy");
+        $('.selectpicker').val(null).selectpicker('refresh'); 
+        _tableList = [];
+        onGenarateTable();
     });
 
     $(document).on("show.bs.modal", "#modal_edit", async function(e) {
         let modal = $(this);
         let wkcode = modal.attr("data-wkcode");
-        let worker = (_workerList.filter(f => f.wkcode == wkcode))[0];
+        let worker = (_orderList.filter(f => f.wkcode == wkcode))[0];
         Object.keys(worker).forEach((f, k) => {
             modal.find(`.modal-body [name=${f}]`).val(worker[f]);
         });
@@ -304,6 +269,24 @@
         }).val(worker['empcode']).trigger('change');
     });
 
+    $(document).on("show.bs.modal", "#modal-add-multi", function() {
+        $('#multi-list').bootstrapDualListbox({
+            filterTextClear: "แสดงทั้งหมด",
+            nonSelectedListLabel: 'รายการที่สามารถเลือกได้',
+            selectedListLabel: 'รายการที่เลือก',
+            preserveSelectionOnMove: 'moved',
+            moveAllLabel: 'เลือกทั้งหมด',
+            btnMoveAllText: 'เลือกทั้งหมด',
+            removeAllLabel: 'ยกเลิกทั้งหมด',
+            btnRemoveAllText: 'ยกเลิกทั้งหมด',
+            infoText: 'รายการทั้งหมด {0} รายการ',
+            infoTextEmpty: 'ไม่มีรายการที่เลือก',
+            infoTextFiltered: '<span class="badge badge-warning">ค้นหาเจอ</span> {0} จาก {1}',
+            filterPlaceHolder: "ค้นหารายการ",
+            helperSelectNamePostfix: "_listadd",
+        });
+    })
+
     $(document).on("hidden.bs.modal", "#modal_edit", function() {
         let model = $(this);
         model.find("select[name=empcode]").empty().select2("destroy");
@@ -312,26 +295,10 @@
 
     $(document).on("hidden.bs.modal", ".sub-modal.modal", function() {
         let model = $(this);
-        model.closest("body").addClass("modal-open").css({"padding-right": "17px"});
-    });
-
-    $(document).on("show.bs.modal", "#modal-add-multi", function() {
-        $('#multi-list').bootstrapDualListbox({
-            filterTextClear:"แสดงทั้งหมด",
-            nonSelectedListLabel: 'รายการที่สามารถเลือกได้',
-            selectedListLabel: 'รายการที่เลือก',
-            preserveSelectionOnMove: 'moved',
-            moveAllLabel: 'เลือกทั้งหมด',
-            btnMoveAllText: 'เลือกทั้งหมด',
-            removeAllLabel: 'ยกเลิกทั้งหมด',
-            btnRemoveAllText: 'ยกเลิกทั้งหมด',
-            infoText:'รายการทั้งหมด {0} รายการ', 
-            infoTextEmpty:'ไม่มีรายการที่เลือก',
-            infoTextFiltered:'<span class="badge badge-warning">ค้นหาเจอ</span> {0} จาก {1}',
-            filterPlaceHolder:"ค้นหารายการ",
-            helperSelectNamePostfix:"_listadd",
+        model.closest("body").addClass("modal-open").css({
+            "padding-right": "0px;"
         });
-    })
+    });
 
     $(document).on("change", "#modalAdd [condi]", function() {
         const m = $("#modalAdd");
@@ -345,57 +312,60 @@
     });
 
     $(document).on("click", "#btn-list-add", function(e) {
-        $('#form-list-add').submit(); 
+        $('#form-list-add').submit();
     });
 
     $(document).on("change", "select[name=wkcode]", function(e) {
-        const val = $(this).val(); 
-        _orderListSeleted = val; 
-        $(`#multi-list option`).attr("hidden",false);  
-        if(!!val[0]){ 
-            _orderListSeleted?.forEach( (val,i)=>{ 
-                $(`#multi-list option[value=${val}]`).attr("hidden", _orderListSeleted.includes(val));  
+        const val = $(this).val();
+        _orderListSeleted = val;
+        $(`#multi-list option`).attr("hidden", false);
+        if (!!val[0]) {
+            _orderListSeleted?.forEach((val, i) => {
+                $(`#multi-list option[value=${val}]`).attr("hidden", _orderListSeleted.includes(val));
             });
         }
-
         $(`#multi-list`).bootstrapDualListbox('refresh');
     });
 
     $(document).on("click", "#btn-multi-list-add", function(e) {
         const modal = $(this).closest("div.modal");
         const mulSelect = $("#multi-list").val();
-        _orderListSeleted = [...new Set([..._orderListSeleted, ...mulSelect]) ];
+        _orderListSeleted = [...new Set([..._orderListSeleted, ...mulSelect])];
         $('select[name=wkcode]').val(_orderListSeleted).trigger('change');
-        
+
         $("#multi-list").val(null).bootstrapDualListbox('refresh');
         modal.modal("hide");
     });
 
-    function onAddList(){ 
-        const wkcode = _orderListSeleted //$("select[name=wkcode]").val();
-        const price = parseFloat($("input[name=price]").val()?.replaceAll(',', ''));
-        const payment = $("select[name=payment]").val();
-        const remark = $("textarea[name=remark]").val();
+    $(document).on("click", "#tableDetail .btn-del-row", function() {
+        const row = $(this).closest("tr");
+        const index = row.attr("row-id");
+        const wkcode = _tableList[Number(index)]?.wkcode;
+        const d = (_worker_option.filter(f => f.id == wkcode))[0];
+
+        var newOption = new Option(d.text, d.id, true, true); 
+        $('select[name=wkcode]').append(newOption).val(null).trigger('change');
+
+        _tableList.splice(Number(index), 1);
+        onGenarateTable();
+        row.remove();
+    });
+
+    function onGenarateTable() {
         $("#tableDetail tbody").empty();
         let total = 0;
-        let t = wkcode.map( m => ({
-            wkcode:m,
-            price:price,
-            payment:payment,
-            remark:remark,
-        }));
-
-        _tableList = [..._tableList, ...t];
-        _tableList?.forEach( (val,i)=>{
-            const d = (_worker_option.filter( f => f.id == val.wkcode))[0];
+        _tableList?.forEach((val, i) => {
+            const d = (_worker_option.filter(f => f.id == val.wkcode))[0];
+            const p = (_product_list_option.filter(f => f.id == val.productlistid))[0];
             let row = `
             <td>${+(i) + 1}</td>
             <td>${d.text}</td>
+            <td>${p.text}</td>
             <td align="right"><a class="ed-link" href="#" num>${val.price.toLocaleString('en-US', {maximumFractionDigits: 5})}</a></td>
             <td align="center"><a class="ed-link" href="#" sec>${val.payment}</a></td>
             <td align="center"><a class="ed-link" href="#" are>${val.remark || "-"}</a></td>
             <td align="center">
-                <button class="btn btn-sm btn-danger">
+                <button class="btn btn-sm btn-danger btn-del-row">
                     <i class="fas fa-trash-alt"></i>
                 </button>
             </td>
@@ -403,13 +373,81 @@
             $("#tableDetail tbody").append(`<tr row-id="${i}">${row}</tr>`);
 
             total += val.price;
-            $("#tableDetail tfoot").find("td").eq(1).text(total.toLocaleString('en-US', {maximumFractionDigits: 5}));  
-            $("#tableDetail tfoot").find("td").eq(3).text(ArabicNumberToText(total));  
+            $("#tableDetail tfoot").find("td").eq(1).text(total.toLocaleString('en-US', {
+                maximumFractionDigits: 5
+            }));
+            $("#tableDetail tfoot").find("td").eq(3).text(ArabicNumberToText(total));
         });
 
+        if (_tableList.length < 1) {
+            $("#tableDetail tbody").html(`<tr><td colspan="6" align="center" class="bg-secondary-50">ไม่มีรายการ</td></tr>`);
+            $("#tableDetail tfoot").find("td").eq(1).text("0.00".toLocaleString('en-US', {
+                maximumFractionDigits: 5
+            }));
+            $("#tableDetail tfoot").find("td").eq(3).text("");
+        }
+    }
+
+    function onAddList() {
+        const wkcode = _orderListSeleted //$("select[name=wkcode]").val();
+        const price = parseFloat($("input[name=price]").val()?.replaceAll(',', ''));
+        const payment = $("select[name=payment]").val();
+        const productid = $("select[name=productid]").val();
+        const remark = $("textarea[name=remark]").val();
+        const productname = $("select[name=productid] option:selected").text();
+
+        let t = wkcode.map(m => ({
+            wkcode: m,
+            price: price,
+            payment: payment,
+            remark: remark,
+            productlistid: parseFloat(productid),
+        }));
+
+        _tableList = [..._tableList, ...t];
+        onGenarateTable();
         $("select[name=wkcode] option:selected").remove().trigger('change');
         $("input[name=price]").val(null);
-        $("select[name=payment]").val(null).selectpicker('refresh');;
+        $("select[name=payment]").val(null).selectpicker('refresh');
+        $("select[name=productid]").val(null).selectpicker('refresh');
         $("textarea[name=remark]").val(null);
+    }
+
+    async function onAddOrder() {
+        const modal = $("#modalAdd");
+        if(!!!_tableList[0]) {
+            await Swal.fire('ไม่มีข้อมูลรายการ', "กรุณาเลือกรายการ", 'warning');
+            throw new Error("เลือกรายการก่อน")
+        }
+        const empcode = modal.find("select[name=empcode] option:selected").val();
+        const orderDetail = _tableList;
+        const dto = {
+            empcode: empcode,
+            productgroupid: PRODUCT_GROUP_ID,
+            list: orderDetail,
+        }
+        Swal.fire({
+            title: 'ยืนยันการเพิ่มรายการ',
+            text: "ตกลง เพื่อเพิ่มรายการ",
+            icon: 'warning',
+            backdrop: 'swal2-backdrop-show',
+            allowOutsideClick: false,
+            showCancelButton: true,
+            cancelButtonText: 'ยกเลิก การเพิ่มรายการ',
+            cancelButtonColor: '#d33',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'ตกลง',
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const res = await $.post("ajax/add_order.php", dto, null, "json").catch(error => {
+                    Swal.fire('เกิดข้อผิดพลาด', "เกิดปัญหาในหารเพิ่มข้อมูลกรุณาลองใหม่อีกครั้ง", 'error')
+                    throw new Error(error?.message || 'เกิดข้อผิดพลาด');
+                });
+
+                Swal.fire('เสร็จสิ้น!', 'เพิ่มรายการเสร็จสิ้น', 'success').then(() => {
+                    window.location.reload();
+                })
+            }
+        });
     }
 </script>

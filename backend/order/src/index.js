@@ -1,4 +1,7 @@
 
+const STATUS_SO = {
+
+}
 
 const HEADER = [
     {
@@ -22,9 +25,9 @@ const HEADER = [
 ]; 
  
 async function gettingOrder() {
-    let res = (await $.get("ajax/get_order.php").catch(async (e) => {
+    let res = (await $.get("ajax/get_order.php", {g:PRODUCT_GROUP_ID}).catch(async (e) => {
         let res = e.responseJSON;
-        await Swal.fire("มีข้อผิดพลาดเกิดขึ้น", res.message, "error");
+        await Swal.fire("มีข้อผิดพลาดเกิดขึ้น", res?.message || "Unhandle  error.", "error");
     })) || [];
 
     return res;
@@ -42,7 +45,7 @@ async function gettingFile(code) {
     return res;
 }
 
-async function gettingoptionEmployer() {
+async function gettingOptionEmployer() {
     let res = (await $.get("ajax/get_optionemployer.php").catch(async (e) => {
         let res = e.responseJSON;
         await Swal.fire("มีข้อผิดพลาดเกิดขึ้น", res?.message, "error");
@@ -51,7 +54,7 @@ async function gettingoptionEmployer() {
     return res;
 }
 
-async function gettingoptionEmployer(code) {
+async function gettingOptionEmployer(code) {
     let res = (await $.get("ajax/get_optionemployer.php", {empcode:code} ).catch(async (e) => {
         let res = e.responseJSON;
         await Swal.fire("มีข้อผิดพลาดเกิดขึ้น", res?.message, "error");
@@ -78,6 +81,15 @@ async function gettingWorkerOption(ky, code){
     return rst;
 }
 
+async function gettingOptionProductList(){
+    let rst = (await $.get("ajax/get_optionproductlist.php", {g:PRODUCT_GROUP_ID}).catch(async (e) => {
+        let res = e.responseJSON;
+        await Swal.fire("มีข้อผิดพลาดเกิดขึ้น", res?.message, "error");
+    })) || [];
+
+    return rst;
+}
+
 function tables($this, col, data, option) {
     return $($this).DataTable(
         Object.assign(
@@ -95,14 +107,13 @@ function tables($this, col, data, option) {
 
 function setRowTable(m) {
     return [
-        m.wkcode,
-        m.wkname,
-        m.lastname,
-        m.idcode,
-        m.passport,
-        `<span class="label badge ${m.status == 'Y' ? 'bg-success' : 'bg-danger'} label-white middle">${m.status == 'Y' ? 'ใช้งาน' : 'ไม่ใช้งาน'}</span>`,
+        m.socode,
+        m.sodate,
+        m.customer,
+        m.sotype, 
+        `<span class="label badge ${m.status == 'รอชำระ' ? 'bg-warning' : m.status == 'ชำระเสร็จสิ้น' ? 'bg-success' : 'bg-danger'} label-white middle">${m.status}</span>`,
         `<div>
-            <button class="btn btn-sm rounded btn-primary btn-edit" data-whatever="${m.wkcode}" data-wkcode="${m.wkcode}">
+            <button class="btn btn-sm rounded btn-primary btn-edit" data-whatever="${m.socode}" data-wkcode="${m.socode}">
                 <i class="fas fa-pencil-alt"></i>
             </button>
         </div>`,
