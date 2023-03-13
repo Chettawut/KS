@@ -141,9 +141,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // var_dump($passportexpired);
         // throw new Exception("error test");
         // die;
-        $sql  = "UPDATE worker SET wkname=?,lastname=?,titlename=?,idcode=?,wkbirth=?,passport=?,passportexpired=? where wkcode = ?";
+        $sql  = "UPDATE worker SET wkname=?,lastname=?,titlename=?,idcode=?,wkbirth=?,passport=?,passportexpired=?,tel=? where wkcode = ?";
         $stmt = $conn->prepare($sql); // prepare
-        $data = [$wkname, $lastname, $titlename, $idcode, $wkbirth, $passport, $passportexpired, $wkcode];
+        $data = [$wkname, $lastname, $titlename, $idcode, $wkbirth, $passport, $passportexpired, $tel, $wkcode];
         $stmt->bind_param(str_repeat('s', count($data)), ...$data); // bind array at once
         if (!$stmt->execute()) throw new Exception("Update data error.");
         // var_dump($data);

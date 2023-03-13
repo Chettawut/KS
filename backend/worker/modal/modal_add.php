@@ -46,14 +46,18 @@
                     <div class="form-row">
                         <div class="col-md-6 col-sm-12">
                             <label class="col-form-label">วันเกิด :</label>
-                            <input type="date" name="wkbirth" id="wkbirth" class="form-control" />                    
+                            <input type="date" name="wkbirth" id="wkbirth" class="form-control" />
                         </div>
                         <div class="col-md-6 col-sm-12">
                             <label class="col-form-label">วันหมดอายุ พาสปอร์ต:</label>
-                            <input type="date" name="passportexpired" id="passportexpired" class="form-control" required> 
+                            <input type="date" name="passportexpired" id="passportexpired" class="form-control" required>
                         </div>
                     </div>
                     <div class="form-row">
+                        <div class="col-md-6 col-sm-12">
+                            <label class="col-form-label">บอร์โทรศัพท์ :</label>
+                            <input type="text" maxlength="13" name="tel" id="tel" class="form-control" />
+                        </div>
                         <div class="col-md-6 col-sm-12">
                             <label class="col-form-label">นายจ้าง :</label>
                             <select class="form-control select2 select2-hidden-accessible" style="width: 100%; height: 100%;" name="empcode" data-placeholder="เลือกนายจ้าง" data-allow-clear="true">

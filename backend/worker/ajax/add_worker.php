@@ -93,8 +93,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //&& !empty($_FILES["file"])
     //$conn->autocommit(FALSE); 
     $conn->begin_transaction();
     try {
-        $sql = "INSERT INTO worker (wkcode,wkname,lastname,titlename,idcode,wkbirth,regisdate,passport,passportexpired,status) VALUES (?,?,?,?,?,?,?,?,?,'Y')"; // sql
-        $data = [$wkcode, $wkname, $lastname, $titlename, $idcode, $wkbirth, $regisdate, $passport, $passportexpired]; // put your data into array
+        $sql = "INSERT INTO worker (wkcode,wkname,lastname,titlename,idcode,wkbirth,regisdate,passport,passportexpired,status,tel) VALUES (?,?,?,?,?,?,?,?,?,'Y',?)"; // sql
+        $data = [$wkcode, $wkname, $lastname, $titlename, $idcode, $wkbirth, $regisdate, $passport, $passportexpired, $tel]; // put your data into array
         $stmt = $conn->prepare($sql); // prepare
         $stmt->bind_param(str_repeat('s', count($data)), ...$data); // bind array at once
         if (!$stmt->execute()) throw new mysqli_sql_exception("Insert data error.");

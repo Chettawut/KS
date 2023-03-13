@@ -11,7 +11,7 @@ if (!isset($_SESSION['loggedin'])) {
 
 try {
 	$sql = "
-	select w.*, em.empcode, em.empname, em.lastname as emp_lastname, em.tel
+	select w.*, em.empcode, em.empname, em.lastname as emp_lastname
 	from worker w
 	left outer join
 	(
