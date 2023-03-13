@@ -10,9 +10,9 @@ $(function() {
             for (count = 0; count < result.username.length; count++) {
 
                 if (result.type[count] == '01')
-                    type = 'ธุรการ'
+                    type = 'ฝ่ายขาย'
                 if (result.type[count] == '02')
-                    type = 'Messenger'
+                    type = 'คนจัดเก็บข้อมูล'
                 if (result.type[count] == '03')
                     type = 'บัญชี'
                 if (result.type[count] == '99')
