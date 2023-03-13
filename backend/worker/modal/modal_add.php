@@ -55,7 +55,7 @@
                     </div>
                     <div class="form-row">
                         <div class="col-md-6 col-sm-12">
-                            <label class="col-form-label">บอร์โทรศัพท์ :</label>
+                            <label class="col-form-label">เบอร์โทรศัพท์ :</label>
                             <input type="text" maxlength="13" name="tel" id="tel" class="form-control" />
                         </div>
                         <div class="col-md-6 col-sm-12">
