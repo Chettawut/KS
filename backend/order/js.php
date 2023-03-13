@@ -540,12 +540,19 @@
         const empcode = a?.val();
         const empname = a?.find("option:selected").text();
         const modal = a.closest("div.modal");
+
         //modal.find("input[id=empname").val(empname);
         modal.find("button.btn-add-row").attr("disabled", !!!empcode);
+        _tableList = [];
+        onGenarateTable(modal);
         
-        
-        if (!!!empcode) return;
-        
+        if (!!!empcode){
+            modal.find("#customer").val(null);
+            modal.find("input[name=tel]").val(null);
+            return;
+        }
+        const tel = ( _employer_option?.filter(f => f.id == empcode) )[0]?.tel;
+        modal.find("input[name=tel]").val(tel);
         modal.find("input[id=customer").val(`${empcode} / ${empname}`);
         setWorkerList(modal, empcode);
         // modal.find("select[name=wkcode]").select2("destroy");
@@ -609,7 +616,7 @@
         });
 
         if (_tableList.length < 1) {
-            table.find("tbody").html(`<tr><td colspan="6" align="center" class="bg-secondary-50">ไม่มีรายการ</td></tr>`);
+            table.find("tbody").html(`<tr><td colspan="7" align="center" class="bg-secondary-50">ไม่มีรายการ</td></tr>`);
             table.find("tfoot").find("td").eq(1).text("0.00".toLocaleString('en-US', {
                 maximumFractionDigits: 5
             }));

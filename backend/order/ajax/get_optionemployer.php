@@ -3,7 +3,7 @@
 
 	if ($_SERVER["REQUEST_METHOD"] == "GET" ) {
 		include('../../conn.php');		
-		$sql = "SELECT empcode id, concat(empname, '  ', lastname) text from employer"; 
+		$sql = "SELECT empcode id, concat(empname, '  ', lastname) text, tel  from employer"; 
 		$query = mysqli_query($conn,$sql);
 		// Fetch all
 		$res = $query->fetch_all(MYSQLI_ASSOC); //MYSQLI_ASSOC

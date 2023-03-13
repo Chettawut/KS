@@ -100,16 +100,26 @@
                                 </div>
                             </form>
                             <div class="form-row">
-                                <div class="col-md-12 col-sm-12 pt-3 text-right">
+                                <div class="col-md-12 col-sm-12 pt-3 text-right sec-add">
                                     <button class="btn btns-tool btn-sm btn-primary btn-add-row" id="btn-list-add">
                                         <i class="far fa-plus-square mr-2"></i>
                                         <span>เพิ่มรายการ</span>
                                     </button>
                                 </div>
+                                <div class="col-md-12 col-sm-12 pt-3 text-right sec-edit d-none">
+                                    <button class="btn btns-tool btn-sm btn-success btn-edit" id="btn-list-edit">
+                                        <i class="fas fa-check-circle mr-2"></i>
+                                        <span>ยืนยันการแก้ไข</span>
+                                    </button>
+                                    <button class="btn btns-tool btn-sm btn-secondary btn-cancel" id="btn-list-cancel">
+                                        <i class="fas fa-times-circle mr-2"></i>
+                                        <span>ยกเลิก</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="card">
+                    <div class="card" id="sec-table-list" block-event="false" titles="รอแก้ไขข้อมูล">
                         <div class="card-header border-0 w-100 d-flex align-items-center justify-content-between">
                             <h4 class="card-title col-6" style="font-size: 0.9rem; font-weight: 600;">รายการ(ลูกจ้าง)</h4>
                             <!-- <div class="card-tools col-6 text-right">
