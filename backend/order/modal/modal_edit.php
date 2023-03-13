@@ -1,97 +1,152 @@
-<div class="modal fade bd-example-modal-xl" tabindex="-1" id="modal_edit" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+<div class="modal fade bd-example-modal-xl pl-0" tabindex="-1" id="modal_edit" role="dialog" data-backdrop="static" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content w3-flat-turquoise">
             <div class="modal-header bg-gradient-secondary">
-                <h5 class="modal-title">แก้ไขลูกจ้าง</h5>
+                <h5 class="modal-title">เพิ่มใบรับงาน</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form name="frmEditWorker" id="frmEditWorker" method="POST" style="padding:10px;" action="javascript:void(0);" enctype="multipart/form-data">
+                <form name="modalAdd" id="modalAdd" method="POST" style="padding:10px;" action="javascript:void(0);" enctype="multipart/form-data">
                     <div class="form-row">
-                        <div class="col-md-6 col-sm-12 d-flex gap-2" style="gap: 8px;">
-                            <div class="col-msd-3 p-0">
-                                <label class="col-form-label">คำนำหน้า :</label>
-                                <select class="custom-select" name="titlename" id="titlename" required>
-                                    <option value=""></option>
-                                    <option value="นาย">นาย</option>
-                                    <option value="น.ส.">น.ส.</option>
-                                    <option value="นาง">นาง</option>
-                                    <option value="ว่าที่ร้อยตรี">ว่าที่ร้อยตรี</option>
-                                    <option value="ดร.">ดร.</option>
-                                </select>
-                            </div>
-                            <div class="col-md-9 p-0">
-                                <label class="col-form-label">ชื่อ :</label>
-                                <input type="text" class="form-control" name="wkname" id="wkname" value="" required>
+                        <div class="col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label class="col-form-label">ประเภทใบงานรับงาน<strong class="text-danger">*</strong> :</label>
+
+                                <input type="text" class="form-control" id="productgroupname" value="" disabled="true">
                             </div>
                         </div>
-                        <div class="col-md-6 col-sm-12">
-                            <label class="col-form-label">นามสกุล :</label>
-                            <input type="text" class="form-control" name="lastname" id="lastname" value="" required>
-                        </div>
                     </div>
 
                     <div class="form-row">
                         <div class="col-md-6 col-sm-12">
-                            <label class="col-form-label">รหัสบัตรประชาชน :</label>
-                            <input type="text" class="form-control" name="idcode" id="idcode" value="">
+                            <label class="col-form-label">ลูกค้า(นายจ้าง) : </label>
+                            <input type="text" class="form-control" id="customer" value="" readonly  placeholder="โปรดเลือกลูกค้า">
                         </div>
                         <div class="col-md-6 col-sm-12">
-                            <label class="col-form-label">พาสปอร์ต :</label>
-                            <input type="text" class="form-control" name="passport" id="passport" value="" required>
+                            <label class="col-form-label">เบอร์โทรศัพท์ :</label>
+                            <input type="text" class="form-control" id="tel" name="tel" value="" placeholder="กรอกเบอร์โทรศัพท์">
                         </div>
                     </div>
-
                     <div class="form-row">
-                        <div class="col-md-6 col-sm-12">
-                            <label class="col-form-label">วันเกิด :</label>
-                            <input type="date" name="wkbirth" id="wkbirth" class="form-control" required>
-                        </div>
-                        <div class="col-md-6 col-sm-12">
-                            <label class="col-form-label">วันหมดอายุ พาสปอร์ต:</label>
-                            <input type="date" name="passportexpired" id="passportexpired" class="form-control" required>
-                        </div>
-                    </div>
 
-                    <div class="form-row">
-                        <div class="col-md-6 col-sm-12">
-                            <label class="col-form-label">นายจ้าง :</label>
-                            <select class="form-control select2 select2-hidden-accessible" style="width: 100%; height: 100%;" name="empcode" data-placeholder="เลือกนายจ้าง" data-allow-clear="true">
-                                <!--  -->
-                            </select>
-                        </div>
                     </div>
                 </form>
-                <div class="section-attach-file">
-                    <div class="card">
-                        <div class="card-header border-0 w-100 d-flex align-items-center justify-content-between">
-                            <h4 class="card-title col-6" style="font-size: 0.9rem; font-weight: 600;">รายการ ไฟล์แนบ</h4>
-                            <div class="card-tools col-6 text-right">
-                                <a href="#" class="btn btns-tool btn-sm btn-secondary" data-toggle="modal" data-target="#modal-attach" onclick="openMgnFile('#attachFileListEdit')">
-                                    <i class="fas fa-paperclip"></i>
-                                    <span>แนบไฟล์เอกสาร</span>
-                                </a>
-                                <input type="file" class="custom-file-input d-none" name="atthFile" onchange="attached(event, '#attachFileListEdit')">
+                <div class="section-add" id="addList">
+                    <div class="card" id="sec-add-list" block-event="false" titles="กรุณาเลือกข้อมูลให้ครบก่อน">
+                        <div class="card-header">
+                            <h4 class="card-title col-6" style="font-size: 0.9rem; font-weight: 600;">เพิ่มรายการ</h4>
+                        </div>
+                        <div class="card-body p-3">
+                            <form action="#" id="form-list-add">
+                                <div class="form-row">
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label class="col-form-label">
+                                                เลือกรายการ(ลูกจ้าง)
+                                                <strong class="text-danger">*</strong> :
+                                            </label>
+                                            <div class="d-flex align-items-start">
+                                                <select class="form-control select2 select2-hidden-accessible" multiple="multiple" style="width: 100%; height: 100%;" name="wkcode" data-placeholder="เลือกลูกจ้าง" data-allow-clear="true" required>
+                                                    <!--  -->
+                                                </select>
+                                                <button class="btn ml-1 mt-2 btn-xs btn-success text-nowrap btn-multi" type="button" data-toggle="modal" data-target="#modal-add-multi">
+                                                    <i class="far fa-list-alt mr-2"></i>
+                                                    <span>เลือกแบบหลายรายการ</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label class="col-form-label">ประเภทรายการ<strong class="text-danger">*</strong> :</label>
+                                            <select class="form-control selectpicker" name="productid" id="productid" title="เลือกประเภทรายการ">
+                                                <!--  -->
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label class="col-form-label">ราคา<strong class="text-danger">*</strong> :</label>
+                                            <input class="form-control" name="price" placeholder="กรอกราคา" numberOnly="true" addComma="true" autocomplete="off" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label class="col-form-label" for="payment">การชำระเงิน<strong class="text-danger">*</strong> :</label>
+                                            <select class="form-control selectpicker" name="payment" id="payment" title="เลือกประเภทรายการ">
+                                                <option value="เงินสด">เงินสด</option>
+                                                <option value="โอนชำระ">โอนชำระ</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <label class="col-form-label" for="remark">หมายเหตุ :</label>
+                                        <textarea class="form-control" name="remark" style="height: 10vh; max-height: 10vh; min-height: 10vh;"></textarea>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="form-row">
+                                <div class="col-md-12 col-sm-12 pt-3 text-right sec-add">
+                                    <button class="btn btns-tool btn-sm btn-primary btn-add-row" id="btn-list-add">
+                                        <i class="far fa-plus-square mr-2"></i>
+                                        <span>เพิ่มรายการ</span>
+                                    </button>
+                                </div>
+                                <div class="col-md-12 col-sm-12 pt-3 text-right sec-edit d-none">
+                                    <button class="btn btns-tool btn-sm btn-success btn-edit" id="btn-list-edit">
+                                        <i class="fas fa-check-circle mr-2"></i>
+                                        <span>ยืนยันการแก้ไข</span>
+                                    </button>
+                                    <button class="btn btns-tool btn-sm btn-secondary btn-cancel" id="btn-list-cancel">
+                                        <i class="fas fa-times-circle mr-2"></i>
+                                        <span>ยกเลิก</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                        <div class="card-body table-responsives overflow-auto pt-0" style="max-height:36vh;">
-                            <table class="table table-striped table-valign-middle table-bordered table-hovers" id="attachFileListEdit">
-                                <thead class="sticky-top table-secondary">
-                                    <tr>
-                                        <th style="width: 75px; text-align: center;">ลำดับ</th>
-                                        <th style="min-width: 100px;">หัวข้อไฟล์</th>
-                                        <th style="min-width: 300px;">ไฟล์แนบ</th>
-                                        <th style="width: 125px; text-align: center;">ตัวเลือก</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td colspan="4" align="center" class="bg-secondary">ไม่มีข้อมูลไฟล์</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                    </div>
+                    <div class="card" id="sec-table-list" block-event="false" titles="รอแก้ไขข้อมูล">
+                        <div class="card-header border-0 w-100 d-flex align-items-center justify-content-between">
+                            <h4 class="card-title col-6" style="font-size: 0.9rem; font-weight: 600;">รายการ(ลูกจ้าง)</h4>
+                            <!-- <div class="card-tools col-6 text-right">
+  
+                            </div> -->
+                        </div>
+                        <div class="card-body pt-0" style="min-height:36vh;">
+                            <div class="table-responsives overflow-auto ">
+                                <table class="table table-striped table-valign-middle table-bordered table-hovers text-nowarp" id="tableDetail">
+                                    <thead class="sticky-top table-defalut bg-info">
+                                        <tr>
+                                            <th style="width: 80px;">ลำดับ</th>
+                                            <th>รายการ(ลูกจ้าง)</th>
+                                            <th>ประเภทรายการ</th>
+                                            <th style="width: 140px; text-align: end;">ราคา</th>
+                                            <th style="width: 140px; text-align: center;">การชำระเงิน</th>
+                                            <th style="text-align: center; border-right-width: 0px;">หมายเหตุ</th>
+                                            <th style="width: 60px; text-align: center; border-left-width: 0px;"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="7" align="center" class="bg-secondary-50">ไม่มีรายการ</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot class="sticky-bottom table-defalut bg-secondary">
+                                        <tr>
+                                            <td colspan="3" class="border-left-0 border-right-0">รวมเงิน (Total)</td>
+                                            <td class="border-left-0 border-right-0 text-right">0.00</td>
+                                            <td class="border-left-0 border-right-0 text-center">บาท(หน่วย)</td>
+                                            <td class="text-center" colspan="2"></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -99,7 +154,7 @@
             <div class="modal-footer">
                 <div class="col text-center">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
-                    <button type="submit" form="frmEditWorker" class="btn btn-primary">แก้ไข</button>
+                    <button type="submit" form="modalAdd" class="btn btn-primary" onclick="onEditOrder(event)" >ยืนยันการแก้ไข</button>
                 </div>
             </div>
         </div>

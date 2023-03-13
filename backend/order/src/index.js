@@ -17,6 +17,9 @@ const HEADER = [
         title: "ประเภทใบรับงาน",
     },
     {
+        title: "เบอร์โทรศัพท์",
+    },
+    {
         title: "สถานะ",
     },
     {
@@ -26,6 +29,15 @@ const HEADER = [
  
 async function gettingOrder() {
     let res = (await $.get("ajax/get_order.php", {g:PRODUCT_GROUP_ID}).catch(async (e) => {
+        let res = e.responseJSON;
+        await Swal.fire("มีข้อผิดพลาดเกิดขึ้น", res?.message || "Unhandle  error.", "error");
+    })) || [];
+
+    return res;
+}
+ 
+async function gettingOrderDetail(socode) {
+    let res = (await $.get("ajax/get_orderdetail.php", {g:socode}).catch(async (e) => {
         let res = e.responseJSON;
         await Swal.fire("มีข้อผิดพลาดเกิดขึ้น", res?.message || "Unhandle  error.", "error");
     })) || [];
@@ -110,58 +122,19 @@ function setRowTable(m) {
         m.socode,
         m.sodate,
         m.customer,
-        m.sotype, 
+        m.productgroupname, 
+        m.tel, 
         `<span class="label badge ${m.status == 'รอชำระ' ? 'bg-warning' : m.status == 'ชำระเสร็จสิ้น' ? 'bg-success' : 'bg-danger'} label-white middle">${m.status}</span>`,
         `<div>
-            <button class="btn btn-sm rounded btn-primary btn-edit" data-whatever="${m.socode}" data-wkcode="${m.socode}">
+            <button class="btn btn-sm rounded btn-primary btn-edit" data-whatever="${m.socode}" data-socode="${m.socode}">
                 <i class="fas fa-pencil-alt"></i>
-            </button>
+            </button> 
         </div>`,
     ];
 }
 
 function actionRow(row, data, dataIndex) {
     $(row).attr("id-ref", data[0]);
-}
- 
-async function customerSelected(e){
-    let a = $( $(e)[0].target );
-    const empcode = a?.val();
-    const empname = a?.find("option:selected").text();
-    const modal = a.closest("div.modal");
-    modal.find("input[id=empcode").val(empcode);
-    modal.find("input[id=empname").val(empname);
-    modal.find("button.btn-add-row").attr("disabled", !!!empcode );
-    
-    
-    if(!!!empcode) return;
-
-    // modal.find("select[name=wkcode]").select2("destroy");
-    setTimeout( ()=>{
-        gettingWorkerOption("GetByEmployer", empcode).then( r => {
-            modal.find("select[name=wkcode]").empty().select2({
-                destroy: true,
-                data: r,
-                dropdownParent: $("#addList"),
-            }).val(r.length == 1 ? r[0].id : null).trigger('change');
-
-            $("#multi-list").empty();
-            r?.forEach( (f, i) => {
-                $("#multi-list").append(`<option value="${f.id}" >${f.text}</option>`);
-            });
-            _worker_option = r;
-        });        
-    }, 100);
-
-    
-    // console.log(worker);
-    // modal.find("select[name=wkcode]").trigger({
-    //     type: 'select2:select',
-    //     params: {
-    //         data: worker_option
-    //     }
-    // });
-
 }  
 
 $(document).on("keypress keyup", "[numberOnly]",function (e) {

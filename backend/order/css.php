@@ -3,6 +3,12 @@
         background-color: #c1c8d7;
     }
 
+    #tableList>thead>tr>th:nth-last-child(3),
+    #tableList>tbody>tr>td:nth-last-child(3) {
+        text-align: center;
+        width: 118px !important;
+    }
+
     #tableList>thead>tr>th:nth-last-child(2),
     #tableList>tbody>tr>td:nth-last-child(2) {
         text-align: center;
@@ -32,14 +38,14 @@
     }
 
     [block-event="true"]::after {
-        content: "กรุณาเลือกข้อมูลให้ครบก่อน";
+        content: attr(titles);
         display: flex;
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        z-index: 2;
+        z-index: 1022;
         background-color: #f7f7f7fc;
         align-items: center;
         justify-content: center;
@@ -47,6 +53,7 @@
         color: #888;
         letter-spacing: 1.5px;
         cursor: no-drop;
+        transition: all 0.5s linear;
     }
 
 </style>

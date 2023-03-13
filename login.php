@@ -94,6 +94,15 @@
             <input type="submit" value="Login">
         </form>
     </div>
+    <?php 
+    session_start();
+    if (!isset($_SESSION['loggedin'])){ ?>
+    <script>
+        $(function() {
+            localStorage.clear();
+        });
+    </script>
+    <?php } ?>
 </body>
 
 </html>

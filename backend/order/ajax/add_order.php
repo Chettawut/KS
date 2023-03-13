@@ -28,10 +28,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //&& !empty($_FILES["file"])
     mysqli_autocommit($conn, false);
     //$conn->begin_transaction();
     try {
-        $sql = "INSERT INTO somaster (socode,sodate,sotype,empcode,status) VALUES (?,?,?,?,'รอชำระ')"; // sql
-        $data = [$socode, $sodate, (int)$productgroupid, $empcode]; // put your data into array
+        $sql = "INSERT INTO somaster (socode,sodate,sotype,empcode,status,tel) VALUES (?,?,?,?,'รอชำระ',?)"; // sql
+        $data = [$socode, $sodate, (int)$productgroupid, $empcode, $tel]; // put your data into array
         $stmt = mysqli_prepare($conn,$sql); // prepare
-        mysqli_stmt_bind_param($stmt,'ssis', ...$data); // bind array at once
+        mysqli_stmt_bind_param($stmt,'ssiss', ...$data); // bind array at once
         if (!mysqli_stmt_execute($stmt)) throw new mysqli_sql_exception("Insert data error."); 
 
         foreach ($list as $i => $v) { 

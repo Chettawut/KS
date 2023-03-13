@@ -29,12 +29,12 @@
 
                     <div class="form-row">
                         <div class="col-md-6 col-sm-12">
-                            <label class="col-form-label">รหัสลูกค้า(นายจ้าง) : </label>
-                            <input type="text" class="form-control" id="empcode" value="" readonly>
+                            <label class="col-form-label">ลูกค้า(นายจ้าง) : </label>
+                            <input type="text" class="form-control" id="customer" value="" readonly  placeholder="โปรดเลือกลูกค้า">
                         </div>
                         <div class="col-md-6 col-sm-12">
-                            <label class="col-form-label">ชื่อลูกค้า :</label>
-                            <input type="text" class="form-control" id="empname" value="" disabled="true">
+                            <label class="col-form-label">เบอร์โทรศัพท์ :</label>
+                            <input type="text" class="form-control" id="tel" name="tel" value="" placeholder="กรอกเบอร์โทรศัพท์">
                         </div>
                     </div>
                     <div class="form-row">
@@ -42,7 +42,7 @@
                     </div>
                 </form>
                 <div class="section-add" id="addList">
-                    <div class="card" id="sec-add-list" block-event="true">
+                    <div class="card" id="sec-add-list" block-event="true" titles="กรุณาเลือกข้อมูลให้ครบก่อน">
                         <div class="card-header">
                             <h4 class="card-title col-6" style="font-size: 0.9rem; font-weight: 600;">เพิ่มรายการ</h4>
                         </div>
@@ -126,8 +126,8 @@
                                             <th>ประเภทรายการ</th>
                                             <th style="width: 140px; text-align: end;">ราคา</th>
                                             <th style="width: 140px; text-align: center;">การชำระเงิน</th>
-                                            <th style="text-align: center;">หมายเหตุ</th>
-                                            <th style="width: 60px; text-align: center;"></th>
+                                            <th style="text-align: center; border-right-width: 0px;">หมายเหตุ</th>
+                                            <th style="width: 60px; text-align: center; border-left-width: 0px;"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
